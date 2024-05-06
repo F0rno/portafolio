@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 export function setupOrbitalScene(far=1000) {
     const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000000);
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, far);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true});
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -14,6 +15,7 @@ export function setupOrbitalScene(far=1000) {
 
 export function setupScene(far=1000) {
     const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000000);
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, far);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -21,7 +23,6 @@ export function setupScene(far=1000) {
     scene.add(new THREE.AmbientLight(0xffffff));
 
     return { scene, renderer, camera };
-
 }
 
 export function onWindowResize(renderer, camera) {
