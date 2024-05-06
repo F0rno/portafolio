@@ -1,7 +1,7 @@
 setTimeout(() => {
     const canvas = document.querySelector('#defaultCanvas0');
     canvas.parentNode.removeChild(canvas);
-}, 1000);
+}, 33000);
 
 /*
 window.onload = function() {

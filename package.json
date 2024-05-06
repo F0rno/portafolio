@@ -1,15 +1,18 @@
 {
   "name": "portafolio",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "author": "Pablo Fornell",
-  "license": "MIT",
+  "devDependencies": {
+    "vite": "5.2.11"
+  },
   "dependencies": {
-    "noisejs": "^2.1.0",
-    "three": "^0.164.1"
+    "noisejs": "2.1.0",
+    "three": "0.164.1"
   }
 }
