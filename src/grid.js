@@ -70,7 +70,7 @@ class Grid {
     }
 
     animateGridPerlinNoise() {
-        // FIX: The time should go backwards instead of stop and reset
+        // FIXME: The time should go backwards instead of stop and reset
         if (this.time > 10) {
             this.time = 0;
         } else { 

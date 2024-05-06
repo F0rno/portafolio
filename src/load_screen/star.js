@@ -2,7 +2,7 @@
 // The Coding Train / Daniel Shiffman
 // https://thecodingtrain.com/challenges/1-starfield
 // https://youtu.be/17WoOqgXsRM
-
+// TODO: Delete me if i dont get used
 class Star {
 
   constructor() {

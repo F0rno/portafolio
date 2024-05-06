@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import * as shaders from './webGL_shaders';
+import { sphere } from './options';
 
 class PerlinNoiseSphere {
   constructor() {
@@ -76,11 +77,16 @@ class PerlinNoiseSphere {
   switchToStandardMaterial() {
     let points = this.mesh.children[0]; // assuming the Points object is the first child
     let standardMaterial = new THREE.MeshStandardMaterial({
-        color: 0xffffff, // set a default color or use a color from your ShaderMaterial if possible
+        color: sphere.color, // set a default color or use a color from your ShaderMaterial if possible
         // add other properties if needed
     });
     points.material = standardMaterial;
-}
+  }
+
+  switchToShaderMaterial() {
+    let points = this.mesh.children[0];
+    points.material = this.mat;
+  }
 }
 
 export default PerlinNoiseSphere;
