@@ -75,10 +75,9 @@ class PerlinNoiseSphere {
   }
 
   switchToStandardMaterial() {
-    let points = this.mesh.children[0]; // assuming the Points object is the first child
+    let points = this.mesh.children[0];
     let standardMaterial = new THREE.MeshStandardMaterial({
-        color: sphere.color, // set a default color or use a color from your ShaderMaterial if possible
-        // add other properties if needed
+        color: sphere.color,
     });
     points.material = standardMaterial;
   }
