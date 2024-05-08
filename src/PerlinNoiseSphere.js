@@ -94,6 +94,10 @@ class PerlinNoiseSphere {
   setRotationSpeed(speed) {
     this.options.perlin.vel = speed;
   }
+
+  getPosition() {
+    return this.mesh.position;
+  }
 }
 
 export default PerlinNoiseSphere;

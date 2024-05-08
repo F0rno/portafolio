@@ -4,8 +4,12 @@ import PerlinNoiseSphere from './src/PerlinNoiseSphere.js';
 import { sphere } from './src/options.js';
 import * as THREE from 'three';
 
-let { scene, renderer, camera } = utils.setupScene(2000, 85)
+let { scene, renderer, camera } = utils.setupScene(3000, 85)
 let grid;
+
+// Camera orbit
+let elapsedTime = 0;
+const radius = 2000;
 
 camera.position.z = 700;
 camera.position.y = 200;
@@ -36,7 +40,7 @@ function animateDecreaseSphereSize(decrease=100) {
 }
 
 function showFloor() {
-    grid = new Grid(200, 4000);
+    grid = new Grid(100, 5000);
     scene.add(grid.getGrid());
     // Set the grid to "floor" rotation
     grid.setRotation(Math.PI / 2, 0, 0);
@@ -50,6 +54,14 @@ function animateWithoutGrid() {
 
 function animateWithGrid() {
     requestAnimationFrame(animate);
+    
+    elapsedTime += 0.0000000000001;// 0.001;
+    // Calculate new camera position
+    camera.position.x = radius * Math.cos(elapsedTime);
+    camera.position.z = radius * Math.sin(elapsedTime);
+    // Make the camera look at the object
+    camera.lookAt(perlinSphere.getPosition());
+
     grid.animateGridPerlinNoise();
     perlinSphere.animate();
     renderer.render(scene, camera);
@@ -90,13 +102,12 @@ window.addEventListener('click', async () => {
         camera.position.z = 2000;
         camera.position.y = 450;
         camera.fov = 0;
-        camera.far = 2500;
         camera.updateProjectionMatrix();
         // Change animation to include grid
         showFloor();
         animate = animateWithGrid;
         perlinSphere.switchToShaderMaterial();
-        perlinSphere.setPosition(0, 600, 0);
+        perlinSphere.setPosition(0, 675, 0);
         animateDecreaseSphereSize(75);
         perlinSphere.setPointsSpeed(0.0001);
         perlinSphere.setRotationSpeed(0.001);

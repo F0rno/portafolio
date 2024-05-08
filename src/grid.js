@@ -70,12 +70,17 @@ class Grid {
     }
 
     animateGridPerlinNoise() {
-        // FIXME: The time should go backwards instead of stop and reset
-        if (this.time > 10) {
-            this.time = 0;
-        } else { 
-            this.time += this.speed;
+        this.directionFlag = this.directionFlag || 1;
+
+        // The time should go backwards instead of stop and reset
+        if (this.time > 100) {
+            this.directionFlag = -1; // change direction to backwards
+        } else if (this.time < 0) {
+            this.directionFlag = 1; // change direction to forwards
         }
+
+        this.time += this.speed * this.directionFlag; // increment or decrement time by speed
+
         for (let i = 0; i < this.size; i++) {
             let p = this.mapTo2D(i);
             let noiseX = this.noise.perlin2(p.x / 10 + this.time, p.y / 10 + this.time);
