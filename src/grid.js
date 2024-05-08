@@ -12,7 +12,7 @@ class Grid {
         this.geometry = new THREE.BufferGeometry();
         this.positions = [];
         this.time = 0;
-        this.speed = 0.003;
+        this.speed = 0.002;
 
         this.initPositions();
         this.initIndexPairs();
