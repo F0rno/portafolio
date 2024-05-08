@@ -4,7 +4,7 @@ import PerlinNoiseSphere from './src/PerlinNoiseSphere.js';
 import { sphere } from './src/options.js';
 import * as THREE from 'three';
 
-let { scene, renderer, camera } = utils.setupScene(3000, 85)
+let { scene, renderer, camera } = utils.setupScene(4000, 85)
 let grid;
 
 // Camera orbit
@@ -55,10 +55,12 @@ function animateWithoutGrid() {
 function animateWithGrid() {
     requestAnimationFrame(animate);
     
-    elapsedTime += 0.0000000000001;// 0.001;
-    // Calculate new camera position
-    camera.position.x = radius * Math.cos(elapsedTime);
-    camera.position.z = radius * Math.sin(elapsedTime);
+    elapsedTime += 0.001; // Orbit speed
+
+    // Rotate the sphere and the grid
+    perlinSphere.mesh.rotation.y += 0.001; // Adjust the value as needed
+    grid.lines.rotation.z += 0.001
+
     // Make the camera look at the object
     camera.lookAt(perlinSphere.getPosition());
 
@@ -74,6 +76,7 @@ animate();
 window.addEventListener('resize', () => utils.onWindowResize(renderer, camera), false);
 
 
+
 ////////////////////////////////////////
 // Director
 ////////////////////////////////////////
@@ -81,6 +84,33 @@ window.addEventListener('resize', () => utils.onWindowResize(renderer, camera), 
 let clickCount = 0;
 let lastClickTime = 0;
 const debounceTime = 1000; // 1000 milliseconds = 1 second
+
+function startMouseCaption() {
+    // Define your min and max x values
+    const minY = 100;
+    const maxY = 575;
+
+    const minX = -600;
+    const maxX = 600;
+
+    // Define a lerp factor
+    const lerpFactor = 0.5;
+
+    // Add an event listener for the mousemove event
+    window.addEventListener('mousemove', (event) => {
+        // Get the mouse position as a percentage of the window height
+        const mousePercentageY = event.clientY / window.innerHeight;
+        const mousePercentageX = event.clientX / window.innerWidth;
+
+        // Map the mouse percentage to a y value between minY and maxY
+        const targetY = minY + (maxY - minY) * mousePercentageY;
+        const targetX = minX + (maxX - minX) * mousePercentageX;
+
+        // Lerp the camera position
+        camera.position.y += (targetY - camera.position.y) * lerpFactor;
+        camera.position.x += (targetX - camera.position.x) * lerpFactor;
+    });
+}
 
 window.addEventListener('click', async () => {
     // Avoid click span
@@ -112,5 +142,6 @@ window.addEventListener('click', async () => {
         perlinSphere.setPointsSpeed(0.0001);
         perlinSphere.setRotationSpeed(0.001);
         utils.increaseFov(camera, 4.5, 128);
+        startMouseCaption();
     }
 });

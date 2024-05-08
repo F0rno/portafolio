@@ -14,3 +14,12 @@ canvas {
   left: 0;
   z-index: -1;
 }
+
+h1 {
+  font-size: 2rem;
+  text-align: center;
+  padding: 10rem;
+  font-size: 70px;
+  color: white;
+  font-family: 'Space Mono', monospace;
+}
