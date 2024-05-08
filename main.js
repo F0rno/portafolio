@@ -4,12 +4,14 @@ import PerlinNoiseSphere from './src/PerlinNoiseSphere.js';
 import { sphere } from './src/options.js';
 import * as THREE from 'three';
 
+// TODO: Sphere properties randomizer
+// TODO: Html content
+
 let { scene, renderer, camera } = utils.setupScene(4000, 85)
 let grid;
 
 // Camera orbit
 let elapsedTime = 0;
-const radius = 2000;
 
 camera.position.z = 700;
 camera.position.y = 200;
@@ -58,7 +60,7 @@ function animateWithGrid() {
     elapsedTime += 0.001; // Orbit speed
 
     // Rotate the sphere and the grid
-    perlinSphere.mesh.rotation.y += 0.001; // Adjust the value as needed
+    //perlinSphere.mesh.rotation.y += 0.001; // Adjust the value as needed
     grid.lines.rotation.z += 0.001
 
     // Make the camera look at the object
@@ -88,7 +90,7 @@ const debounceTime = 1000; // 1000 milliseconds = 1 second
 function startMouseCaption() {
     // Define your min and max x values
     const minY = 100;
-    const maxY = 575;
+    const maxY = 400;
 
     const minX = -600;
     const maxX = 600;
@@ -130,7 +132,7 @@ window.addEventListener('click', async () => {
         await utils.sleep(750)
         // Camera
         camera.position.z = 2000;
-        camera.position.y = 450;
+        camera.position.y = 100; // 450
         camera.fov = 0;
         camera.updateProjectionMatrix();
         // Change animation to include grid
