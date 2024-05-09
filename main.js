@@ -92,7 +92,7 @@ let textMesh;
 
 fontLoader.load('./public/Swera.json', function(font) {
     // Create a geometry of your name
-    const textGeometry = new TextGeometry('Pablo Fornell', {
+    const textGeometry = new TextGeometry('Pablo  Fornell', {
         font: font,
         size: 75,
         depth: 25,
@@ -120,6 +120,18 @@ fontLoader.load('./public/Swera.json', function(font) {
 
     // Set the position of the text to center it
     textMesh.position.set(-width / 2, (-height / 2)+400, (-1000));
+
+    // Create an edges geometry from the text geometry
+    const edges = new THREE.EdgesGeometry(textGeometry);
+
+    // Create a line material
+    const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // black color
+
+    // Create a line segments object to represent the outline
+    const outline = new THREE.LineSegments(edges, lineMaterial);
+
+    // Add the outline to the text mesh
+    textMesh.add(outline);
 });
 
 
@@ -184,8 +196,8 @@ async function mainScript() {
     showFloor();
     animate = mainAnimation;
     perlinSphere.switchToShaderMaterial();
-    perlinSphere.setPosition(0, 900, 0);
-    animateDecreaseSphereSize(75);
+    perlinSphere.setPosition(0, 2000, 0);
+    animateDecreaseSphereSize(64);
     perlinSphere.setPointsSpeed(0.0001);
     perlinSphere.setRotationSpeed(0.001);
     scene.add(textMesh);
