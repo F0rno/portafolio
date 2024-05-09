@@ -6,16 +6,12 @@ import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
-
-// TODO: Try to animate the far not the fov
+// TODO: Adap the text size to the screen size
 // TODO: Sphere properties randomizer
 // TODO: Html content
 
 let { scene, renderer, camera } = utils.setupScene(4000, 85)
 let grid;
-
-// Camera orbit
-let elapsedTime = 0;
 
 camera.position.z = 700;
 camera.position.y = 200;
@@ -60,18 +56,8 @@ function loadAnimation() {
 
 function mainAnimation() {
     requestAnimationFrame(animate);
-    
-    elapsedTime += 0.001; // Orbit speed
-
-    // Rotate the sphere and the grid
-    //perlinSphere.mesh.rotation.y += 0.001; // Adjust the value as needed
-    //grid.lines.rotation.z += 0.001
-
-    // Make the camera look at the object
-    //camera.lookAt(perlinSphere.getPosition());
 
     camera.rotation.x += (targetRotation - camera.rotation.x) * 0.05;
-
     camera.position.x += (targetPositionX - camera.position.x) * speedFactorXtranslation;
 
     grid.animateGridPerlinNoise();
@@ -90,7 +76,7 @@ window.addEventListener('resize', () => utils.onWindowResize(renderer, camera), 
 const fontLoader = new FontLoader();
 let textMesh;
 
-fontLoader.load('./Swera.json', function(font) {
+function loadFont (font) {
     // Create a geometry of your name
     const textGeometry = new TextGeometry('Pablo  Fornell', {
         font: font,
@@ -132,8 +118,10 @@ fontLoader.load('./Swera.json', function(font) {
 
     // Add the outline to the text mesh
     textMesh.add(outline);
-});
+};
 
+let fontData = JSON.parse(document.getElementById('fontData').textContent);
+loadFont(fontLoader.parse(fontData))
 
 ////////////////////////////////////////
 // Director
