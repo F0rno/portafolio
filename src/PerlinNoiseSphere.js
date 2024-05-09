@@ -98,6 +98,10 @@ class PerlinNoiseSphere {
   getPosition() {
     return this.mesh.position;
   }
+
+  hidden() {
+    this.mesh.visible = false;
+  }
 }
 
 export default PerlinNoiseSphere;

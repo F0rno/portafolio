@@ -4,6 +4,8 @@ import PerlinNoiseSphere from './src/PerlinNoiseSphere.js';
 import { sphere } from './src/options.js';
 import * as THREE from 'three';
 
+// TODO: Try to animate the far not the fov
+// TODO: Take the scroll and make the camera look up
 // TODO: Sphere properties randomizer
 // TODO: Html content
 
@@ -42,7 +44,7 @@ function animateDecreaseSphereSize(decrease=100) {
 }
 
 function showFloor() {
-    grid = new Grid(100, 5000);
+    grid = new Grid(100, 10000);
     scene.add(grid.getGrid());
     // Set the grid to "floor" rotation
     grid.setRotation(Math.PI / 2, 0, 0);
@@ -61,10 +63,10 @@ function animateWithGrid() {
 
     // Rotate the sphere and the grid
     //perlinSphere.mesh.rotation.y += 0.001; // Adjust the value as needed
-    grid.lines.rotation.z += 0.001
+    //grid.lines.rotation.z += 0.001
 
     // Make the camera look at the object
-    camera.lookAt(perlinSphere.getPosition());
+    //camera.lookAt(perlinSphere.getPosition());
 
     grid.animateGridPerlinNoise();
     perlinSphere.animate();
@@ -88,9 +90,9 @@ let lastClickTime = 0;
 const debounceTime = 1000; // 1000 milliseconds = 1 second
 
 function startMouseCaption() {
-    // Define your min and max x values
-    const minY = 100;
-    const maxY = 400;
+    // Define your min and max z values
+    const minZ = 1000;
+    const maxZ = 2000;
 
     const minX = -600;
     const maxX = 600;
@@ -101,16 +103,28 @@ function startMouseCaption() {
     // Add an event listener for the mousemove event
     window.addEventListener('mousemove', (event) => {
         // Get the mouse position as a percentage of the window height
-        const mousePercentageY = event.clientY / window.innerHeight;
         const mousePercentageX = event.clientX / window.innerWidth;
 
-        // Map the mouse percentage to a y value between minY and maxY
-        const targetY = minY + (maxY - minY) * mousePercentageY;
+        // Map the mouse percentage to a z value between minZ and maxZ
         const targetX = minX + (maxX - minX) * mousePercentageX;
 
         // Lerp the camera position
-        camera.position.y += (targetY - camera.position.y) * lerpFactor;
         camera.position.x += (targetX - camera.position.x) * lerpFactor;
+    });
+
+    // Add an event listener for the wheel event
+    window.addEventListener('wheel', (event) => {
+        // Determine the scroll direction
+        const scrollDirection = event.deltaY > 0 ? 1 : -1;
+        const maxDegreesLookUp = 90;
+        const minDegreesLookDown = -45; // Define the min look down angle in degrees
+
+        // Convert the max and min rotation angles to radians
+        const maxRotation = maxDegreesLookUp * Math.PI / 180;
+        const minRotation = minDegreesLookDown * Math.PI / 180;
+
+        // Adjust the camera's rotation
+        camera.rotation.x = Math.min(Math.max(camera.rotation.x - scrollDirection * 0.01, minRotation), maxRotation);
     });
 }
 
@@ -131,9 +145,11 @@ window.addEventListener('click', async () => {
         utils.changeColor(scene.background, new THREE.Color(0x000000), 0.05);
         await utils.sleep(750)
         // Camera
-        camera.position.z = 2000;
-        camera.position.y = 100; // 450
+        camera.position.x = 0;
+        camera.position.z = 0;
+        camera.position.y = 128; // 450
         camera.fov = 0;
+        //camera.far = 0;
         camera.updateProjectionMatrix();
         // Change animation to include grid
         showFloor();
