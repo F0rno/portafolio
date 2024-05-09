@@ -90,7 +90,7 @@ window.addEventListener('resize', () => utils.onWindowResize(renderer, camera), 
 const fontLoader = new FontLoader();
 let textMesh;
 
-fontLoader.load('./public/Swera.json', function(font) {
+fontLoader.load('./Swera.json', function(font) {
     // Create a geometry of your name
     const textGeometry = new TextGeometry('Pablo  Fornell', {
         font: font,
@@ -141,14 +141,14 @@ fontLoader.load('./public/Swera.json', function(font) {
 
 let clickCount = 0;
 let lastClickTime = 0;
-const debounceTime = 1000; // 1000 milliseconds = 1 second
+const debounceTime = 0; // 1000 milliseconds = 1 second
 let targetRotation = camera.rotation.x;
 let targetPositionX = camera.position.x;
 const speedFactorXtranslation = 0.01;
 
 function startMouseCaption() {
-    const minX = -600;
-    const maxX = 600;
+    const minX = -512;
+    const maxX = 512;
 
     // Define a lerp factor
 
