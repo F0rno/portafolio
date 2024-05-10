@@ -7,6 +7,7 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
 // TODO: Sphere properties randomization
+// TODO: Make responsive size
 
 const htmlContent = document.querySelector('main');
 
@@ -14,12 +15,12 @@ const htmlContent = document.querySelector('main');
 let { scene, renderer, camera } = utils.setupScene(4000, 85)
 
 let grid;
+const noiseSphere = new PerlinNoiseSphere();
+let borard;
 
 camera.position.set(0, 200, 700);
 
-let noiseSphere = new PerlinNoiseSphere();
 noiseSphere.switchToStandardMaterial();
-
 noiseSphere.increaseSize(41);
 noiseSphere.setPosition(0, 200, 0);
 scene.add(noiseSphere.mesh);
@@ -105,12 +106,20 @@ function loadFont (font) {
 let fontData = JSON.parse(document.getElementById('fontData').textContent);
 loadFont(fontLoader.parse(fontData))
 
+
+////////////////////////////
+// Director
+////////////////////////////
+
 let clickCount = 0;
 let lastClickTime = 0; // TODO: 1000 
 const debounceTime = 0;
 let targetRotation = camera.rotation.x;
 let targetPositionX = camera.position.x;
 const speedFactorXtranslation = 0.01;
+// Create a raycaster and a mouse vector
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
 
 function displayHtmlContent() {
     htmlContent.style.opacity = "1";
@@ -128,7 +137,7 @@ function captureMouseMovement() {
     window.addEventListener('wheel', (event) => {
         const scrollDirection = event.deltaY > 0 ? -1 : 1;
         const maxDegreesLookUp = 85;
-        const minDegreesLookDown = -45;
+        const minDegreesLookDown = 0;
         const scrollSpeedFactor = 0.05;
 
         const maxRotation = maxDegreesLookUp * Math.PI / 180;
@@ -167,6 +176,33 @@ async function mainScript() {
     await utils.sleep(500)
 }
 
+function changeOnClickEvent() {
+    ////////////////////////////
+    // Raycaster
+    ////////////////////////////
+    window.removeEventListener('click', () => { });
+    window.addEventListener('click', (event) => {
+        // Normalize mouse position and set to mouse vector
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+        // Update the picking ray with the camera and mouse position
+        raycaster.setFromCamera(mouse, camera);
+
+        // Calculate objects intersecting the picking ray
+        const intersects = raycaster.intersectObjects(scene.children);
+
+        // If the box is among the intersected objects, open a link
+        for (let i = 0; i < intersects.length; i++) {
+            if (intersects[i].object === borard) {
+                //window.open('http://localhost:5173/1%C2%BA_raycast/', '_blank'); // replace with your link
+                console.log('Box clicked');
+                return;
+            }
+        }
+    }, false);
+}
+
 window.addEventListener('click', async () => {
     let currentTime = new Date().getTime();
     if (currentTime - lastClickTime < debounceTime) {
@@ -178,5 +214,6 @@ window.addEventListener('click', async () => {
         initialScript()
     } else if (clickCount === 2) {
         mainScript()
+        changeOnClickEvent()
     }
 });
