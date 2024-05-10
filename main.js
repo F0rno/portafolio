@@ -10,6 +10,8 @@ import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 // TODO: Sphere properties randomizer
 // TODO: Html content
 
+const htmlContent = document.querySelector('main');
+
 let { scene, renderer, camera } = utils.setupScene(4000, 85)
 let grid;
 
@@ -123,6 +125,7 @@ function loadFont (font) {
 let fontData = JSON.parse(document.getElementById('fontData').textContent);
 loadFont(fontLoader.parse(fontData))
 
+
 ////////////////////////////////////////
 // Director
 ////////////////////////////////////////
@@ -133,6 +136,10 @@ const debounceTime = 0; // 1000 milliseconds = 1 second
 let targetRotation = camera.rotation.x;
 let targetPositionX = camera.position.x;
 const speedFactorXtranslation = 0.01;
+
+function showHtmlContent() {
+    htmlContent.style.opacity = "1";
+}
 
 function startMouseCaption() {
     const minX = -512;
@@ -152,7 +159,7 @@ function startMouseCaption() {
     // Add an event listener for the wheel event
     window.addEventListener('wheel', (event) => {
         const scrollDirection = event.deltaY > 0 ? -1 : 1;
-        const maxDegreesLookUp = 90;
+        const maxDegreesLookUp = 85;
         const minDegreesLookDown = -45;
         const scrollSpeedFactor = 0.05;
 
@@ -184,13 +191,15 @@ async function mainScript() {
     showFloor();
     animate = mainAnimation;
     perlinSphere.switchToShaderMaterial();
-    perlinSphere.setPosition(0, 2000, 0);
+    perlinSphere.setPosition(0, 2000, -100);
     animateDecreaseSphereSize(64);
     perlinSphere.setPointsSpeed(0.0001);
     perlinSphere.setRotationSpeed(0.001);
     scene.add(textMesh);
     utils.increaseFov(camera, 4.5, 128);
     startMouseCaption();
+    await utils.sleep(500)
+    //showHtmlContent();
 }
 
 window.addEventListener('click', async () => {
