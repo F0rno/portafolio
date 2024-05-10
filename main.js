@@ -107,17 +107,24 @@ let fontData = JSON.parse(document.getElementById('fontData').textContent);
 loadFont(fontLoader.parse(fontData))
 
 const bentoUp = 0;
-const bentoLeft = 0;
+const bentoLeft = 100;
 
 // Bento grid boxes
 const boxes = [
     [
+        // 1 alone
+        { 
+            videoSrc: './public/stay-tuned.mp4', 
+            size: { x: 100, y: 100, z: 100 }, 
+            position: { x: -450+bentoLeft, y: 150+bentoUp, z: -1000 }, 
+            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+        },
         // Big 4
         { 
             videoSrc: './public/stay-tuned.mp4', 
             size: { x: 200, y: 200, z: 100 }, 
             position: { x: -300+bentoLeft, y: 200+bentoUp, z: -1000 }, 
-            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+            url: '' 
         },
         // 4 alone
         //  top
@@ -146,8 +153,24 @@ const boxes = [
             position: { x: -50+bentoLeft, y: 150+bentoUp, z: -1000 }, 
             url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9p'
         },
+        // 1 alone
+        { 
+            videoSrc: './public/stay-tuned.mp4', 
+            size: { x: 100, y: 100, z: 100 }, 
+            position: { x: 150+bentoLeft, y: 150+bentoUp, z: -1000 }, 
+            url: '' 
+        },
     ],
+
     [
+        // Big 2 horizontal
+        { 
+            videoSrc: './public/stay-tuned.mp4', 
+            size: { x: 200, y: 100, z: 100 }, 
+            position: { x: -500+bentoLeft, y: 50+bentoUp, z: -1000 }, 
+            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+        },
+        // 2 alone
         { 
             videoSrc: './public/stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100 }, 
@@ -160,15 +183,36 @@ const boxes = [
             position: { x: -250+bentoLeft, y: 50+bentoUp, z: -1000 }, 
             url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
         },
-        // Big 2
+        // Big 2 horizontal
         { 
             videoSrc: './public/stay-tuned.mp4', 
             size: { x: 200, y: 100, z: 100 }, 
             position: { x: -100+bentoLeft, y: 50+bentoUp, z: -1000 }, 
             url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
         },
+        // Big 3 vertical
+        {
+            videoSrc: './public/stay-tuned.mp4',
+            size: { x: 100, y: 300, z: 100 },
+            position: { x: 50+bentoLeft, y: 150+bentoUp, z: -1000 },
+            url: ''
+        },
+        // 2 alone
+        { 
+            videoSrc: './public/stay-tuned.mp4', 
+            size: { x: 100, y: 100, z: 100 }, 
+            position: { x: 150+bentoLeft, y: 50+bentoUp, z: -1000 }, 
+            url: '' 
+        },
+        { 
+            videoSrc: './public/stay-tuned.mp4', 
+            size: { x: 100, y: 100, z: 100 }, 
+            position: { x: 250+bentoLeft, y: 50+bentoUp, z: -1000 }, 
+            url: '' 
+        },
     ],
 ];
+
 
 ////////////////////////////
 // Director
