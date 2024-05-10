@@ -14,23 +14,28 @@ class BentoGrid {
         video.play();
         video.loop = true;
 
-        // Create a video texture
         const videoTexture = new THREE.VideoTexture(video);
 
         // Create a box with the video texture on one face and basic material on other faces
         const boxGeometry = new THREE.BoxGeometry(size.x, size.y, size.z);
         const materials = [
-            new THREE.MeshPhongMaterial(), // Front face
-            new THREE.MeshPhongMaterial(), // Back face
-            new THREE.MeshPhongMaterial(), // Top face
-            new THREE.MeshPhongMaterial(), // Bottom face
+            new THREE.MeshBasicMaterial(), // Front face
+            new THREE.MeshBasicMaterial(), // Back face
+            new THREE.MeshBasicMaterial(), // Top face
+            new THREE.MeshBasicMaterial(), // Bottom face
             new THREE.MeshBasicMaterial({ map: videoTexture }), // Right face
-            new THREE.MeshPhongMaterial()  // Left face
+            new THREE.MeshBasicMaterial()  // Left face
         ];
         const box = new THREE.Mesh(boxGeometry, materials);
         box.position.set(position.x, position.y, position.z);
         box.userData = { url }; // Store the URL in the box's userData
-    
+
+        // Dark lines effect
+        const edges = new THREE.EdgesGeometry(boxGeometry);
+        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
+        const outline = new THREE.LineSegments(edges, lineMaterial);
+        box.add(outline);
+
         return box;
     }
 

@@ -107,7 +107,7 @@ let fontData = JSON.parse(document.getElementById('fontData').textContent);
 loadFont(fontLoader.parse(fontData))
 
 const bentoUp = 0;
-const bentoLeft = 100;
+const bentoLeft = 150;
 
 // Bento grid boxes
 const boxes = [
@@ -117,7 +117,7 @@ const boxes = [
             videoSrc: './public/stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100 }, 
             position: { x: -450+bentoLeft, y: 150+bentoUp, z: -1000 }, 
-            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+            url: '' 
         },
         // Big 4
         { 
@@ -132,26 +132,26 @@ const boxes = [
             videoSrc: './public/stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100 }, 
             position: { x: -150+bentoLeft, y: 250+bentoUp, z: -1000 }, 
-            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+            url: '' 
         },
         { 
             videoSrc: './public/stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100 }, 
             position: { x: -50+bentoLeft, y: 250+bentoUp, z: -1000 }, 
-            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+            url: '' 
         },
         //  bottom
         { 
             videoSrc: './public/stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100 }, 
             position: { x: -150+bentoLeft, y: 150+bentoUp, z: -1000 }, 
-            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9p'
+            url: ''
         },
         { 
             videoSrc: './public/stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100 }, 
             position: { x: -50+bentoLeft, y: 150+bentoUp, z: -1000 }, 
-            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9p'
+            url: ''
         },
         // 1 alone
         { 
@@ -168,27 +168,27 @@ const boxes = [
             videoSrc: './public/stay-tuned.mp4', 
             size: { x: 200, y: 100, z: 100 }, 
             position: { x: -500+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+            url: '' 
         },
         // 2 alone
         { 
             videoSrc: './public/stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100 }, 
             position: { x: -350+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+            url: '' 
         },
         { 
             videoSrc: './public/stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100 }, 
             position: { x: -250+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+            url: '' 
         },
         // Big 2 horizontal
         { 
             videoSrc: './public/stay-tuned.mp4', 
             size: { x: 200, y: 100, z: 100 }, 
             position: { x: -100+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+            url: '' 
         },
         // Big 3 vertical
         {
@@ -274,7 +274,7 @@ async function mainScript() {
     animate = mainAnimation;
     // Sphere
     noiseSphere.switchToShaderMaterial();
-    noiseSphere.setPosition(0, 1500, -100);
+    noiseSphere.setPosition(0, 1750, -100);
     animateSphereSizeDecrease(64);
     noiseSphere.setPointsSpeed(0.0001);
     noiseSphere.setRotationSpeed(0.001);
