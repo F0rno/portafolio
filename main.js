@@ -6,53 +6,47 @@ import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
-// TODO: Adap the text size to the screen size
-// TODO: Sphere properties randomizer
-// TODO: Html content
+// TODO: Sphere properties randomization
 
 const htmlContent = document.querySelector('main');
 
+// Three.js scene setup
 let { scene, renderer, camera } = utils.setupScene(4000, 85)
+
 let grid;
 
-camera.position.z = 700;
-camera.position.y = 200;
-camera.position.x = 0;
+camera.position.set(0, 200, 700);
 
-let perlinSphere = new PerlinNoiseSphere();
-perlinSphere.switchToStandardMaterial();
+let noiseSphere = new PerlinNoiseSphere();
+noiseSphere.switchToStandardMaterial();
 
-let increaseFactor = 41;
+noiseSphere.increaseSize(41);
+noiseSphere.setPosition(0, 200, 0);
+scene.add(noiseSphere.mesh);
 
-perlinSphere.increaseSize(increaseFactor);
-perlinSphere.setPosition(0, 200, 0);
-scene.add(perlinSphere.mesh);
-
-function animateIncreaseSphereSize(speed = 10) {
+function animateSphereSizeIncrease(speed = 10) {
     for (let i = 0; i < 100; i++) {
         setTimeout(() => {
-            perlinSphere.increaseSize(1.01);
+            noiseSphere.increaseSize(1.01);
         }, i * speed);
     }
 }
 
-function animateDecreaseSphereSize(decrease=100) {
-    // decrease the size of the sphere with no delay
+function animateSphereSizeDecrease(decrease=100) {
     for (let i = 0; i < decrease; i++) {
-        perlinSphere.increaseSize(0.99);
+        noiseSphere.increaseSize(0.99);
     }
 }
 
-function showFloor() {
+function displayGrid() {
     grid = new Grid(100, 10000);
     scene.add(grid.getGrid());
-    // Set the grid to "floor" rotation
     grid.setRotation(Math.PI / 2, 0, 0);
 }
 
-function loadAnimation() {
+function initialAnimation() {
     requestAnimationFrame(animate);
-    perlinSphere.animate();
+    noiseSphere.animate();
     renderer.render(scene, camera);
 }
 
@@ -63,23 +57,21 @@ function mainAnimation() {
     camera.position.x += (targetPositionX - camera.position.x) * speedFactorXtranslation;
 
     grid.animateGridPerlinNoise();
-    perlinSphere.animate();
+    noiseSphere.animate();
 
     renderer.render(scene, camera);
 }
 
-let animate = loadAnimation;
+let animate = initialAnimation;
 animate();
 
 // Resize handler
 window.addEventListener('resize', () => utils.onWindowResize(renderer, camera), false);
 
-// Load the font
 const fontLoader = new FontLoader();
 let textMesh;
 
 function loadFont (font) {
-    // Create a geometry of your name
     const textGeometry = new TextGeometry('Pablo  Fornell', {
         font: font,
         size: 75,
@@ -92,71 +84,47 @@ function loadFont (font) {
         bevelSegments: 5
     });
 
-    // Compute the bounding box of the text geometry
     textGeometry.computeBoundingBox();
 
-    // Get the dimensions of the bounding box
     const width = textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x;
     const height = textGeometry.boundingBox.max.y - textGeometry.boundingBox.min.y;
     const depth = textGeometry.boundingBox.max.z - textGeometry.boundingBox.min.z;
 
-    // Create a material for the text
     const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-
-    // Create a mesh with the geometry and material
     textMesh = new THREE.Mesh(textGeometry, textMaterial);
-
-    // Set the position of the text to center it
     textMesh.position.set(-width / 2, (-height / 2)+400, (-1000));
 
-    // Create an edges geometry from the text geometry
+    // Dark lines effect
     const edges = new THREE.EdgesGeometry(textGeometry);
-
-    // Create a line material
-    const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // black color
-
-    // Create a line segments object to represent the outline
+    const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
     const outline = new THREE.LineSegments(edges, lineMaterial);
 
-    // Add the outline to the text mesh
     textMesh.add(outline);
 };
 
 let fontData = JSON.parse(document.getElementById('fontData').textContent);
 loadFont(fontLoader.parse(fontData))
 
-
-////////////////////////////////////////
-// Director
-////////////////////////////////////////
-
 let clickCount = 0;
-let lastClickTime = 0;
-const debounceTime = 0; // 1000 milliseconds = 1 second
+let lastClickTime = 0; // TODO: 1000 
+const debounceTime = 0;
 let targetRotation = camera.rotation.x;
 let targetPositionX = camera.position.x;
 const speedFactorXtranslation = 0.01;
 
-function showHtmlContent() {
+function displayHtmlContent() {
     htmlContent.style.opacity = "1";
 }
 
-function startMouseCaption() {
+function captureMouseMovement() {
     const minX = -512;
     const maxX = 512;
 
-    // Define a lerp factor
-
-    // Add an event listener for the mousemove event
     window.addEventListener('mousemove', (event) => {
-        // Get the mouse position as a percentage of the window width
         const mousePercentageX = event.clientX / window.innerWidth;
-
-        // Map the mouse percentage to a x value between minX and maxX
         targetPositionX = minX + (maxX - minX) * mousePercentageX;
     });
 
-    // Add an event listener for the wheel event
     window.addEventListener('wheel', (event) => {
         const scrollDirection = event.deltaY > 0 ? -1 : 1;
         const maxDegreesLookUp = 85;
@@ -170,48 +138,44 @@ function startMouseCaption() {
     });
 }
 
-function loadScript() {
-    animateIncreaseSphereSize()
+function initialScript() {
+    animateSphereSizeIncrease()
 }
 
 async function mainScript() {
-    animateIncreaseSphereSize(8)
+    // Sphere expansion
+    animateSphereSizeIncrease(8)
     await utils.sleep(750)
-    // Change background color to white
+    // Scene transition to black
     utils.changeColor(scene.background, new THREE.Color(0x000000), 0.05);
     await utils.sleep(750)
-    // Camera
-    camera.position.x = 0;
-    camera.position.z = 0;
-    camera.position.y = 128; // 450
+    camera.position.set(0, 128, 0);
+    // Disable camera
     camera.fov = 0;
-    //camera.far = 0;
     camera.updateProjectionMatrix();
-    // Change animation to include grid
-    showFloor();
+    displayGrid();
     animate = mainAnimation;
-    perlinSphere.switchToShaderMaterial();
-    perlinSphere.setPosition(0, 2000, -100);
-    animateDecreaseSphereSize(64);
-    perlinSphere.setPointsSpeed(0.0001);
-    perlinSphere.setRotationSpeed(0.001);
+    noiseSphere.switchToShaderMaterial();
+    noiseSphere.setPosition(0, 2000, -100);
+    animateSphereSizeDecrease(64);
+    noiseSphere.setPointsSpeed(0.0001);
+    noiseSphere.setRotationSpeed(0.001);
     scene.add(textMesh);
+    // Enable camera with effect
     utils.increaseFov(camera, 4.5, 128);
-    startMouseCaption();
+    captureMouseMovement();
     await utils.sleep(500)
-    //showHtmlContent();
 }
 
 window.addEventListener('click', async () => {
-    // Avoid click span
     let currentTime = new Date().getTime();
     if (currentTime - lastClickTime < debounceTime) {
-        return; // Too soon since last click, ignore this one
+        return;
     }
     lastClickTime = currentTime;
     clickCount++;
     if (clickCount < 2) {
-        loadScript()
+        initialScript()
     } else if (clickCount === 2) {
         mainScript()
     }
