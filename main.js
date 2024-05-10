@@ -10,8 +10,6 @@ import BentoGrid from './src/BentoGrid.js';
 // TODO: Sphere properties randomization
 // TODO: Make responsive size
 
-const htmlContent = document.querySelector('main');
-
 // Three.js scene setup
 let { scene, renderer, camera } = utils.setupScene(4000, 85)
 
@@ -108,19 +106,65 @@ function loadFont (font) {
 let fontData = JSON.parse(document.getElementById('fontData').textContent);
 loadFont(fontLoader.parse(fontData))
 
+const bentoUp = 0;
+const bentoLeft = 0;
+
 // Bento grid boxes
 const boxes = [
     [
+        // Big 4
+        { 
+            videoSrc: './public/stay-tuned.mp4', 
+            size: { x: 200, y: 200, z: 100 }, 
+            position: { x: -300+bentoLeft, y: 200+bentoUp, z: -1000 }, 
+            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+        },
+        // 4 alone
+        //  top
         { 
             videoSrc: './public/stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100 }, 
-            position: { x: -150, y: 100, z: -1000 }, 
+            position: { x: -150+bentoLeft, y: 250+bentoUp, z: -1000 }, 
             url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
         },
         { 
             videoSrc: './public/stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100 }, 
-            position: { x: 150, y: 100, z: -1000 }, 
+            position: { x: -50+bentoLeft, y: 250+bentoUp, z: -1000 }, 
+            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+        },
+        //  bottom
+        { 
+            videoSrc: './public/stay-tuned.mp4', 
+            size: { x: 100, y: 100, z: 100 }, 
+            position: { x: -150+bentoLeft, y: 150+bentoUp, z: -1000 }, 
+            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9p'
+        },
+        { 
+            videoSrc: './public/stay-tuned.mp4', 
+            size: { x: 100, y: 100, z: 100 }, 
+            position: { x: -50+bentoLeft, y: 150+bentoUp, z: -1000 }, 
+            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9p'
+        },
+    ],
+    [
+        { 
+            videoSrc: './public/stay-tuned.mp4', 
+            size: { x: 100, y: 100, z: 100 }, 
+            position: { x: -350+bentoLeft, y: 50+bentoUp, z: -1000 }, 
+            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+        },
+        { 
+            videoSrc: './public/stay-tuned.mp4', 
+            size: { x: 100, y: 100, z: 100 }, 
+            position: { x: -250+bentoLeft, y: 50+bentoUp, z: -1000 }, 
+            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+        },
+        // Big 2
+        { 
+            videoSrc: './public/stay-tuned.mp4', 
+            size: { x: 200, y: 100, z: 100 }, 
+            position: { x: -100+bentoLeft, y: 50+bentoUp, z: -1000 }, 
             url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
         },
     ],
@@ -186,7 +230,7 @@ async function mainScript() {
     animate = mainAnimation;
     // Sphere
     noiseSphere.switchToShaderMaterial();
-    noiseSphere.setPosition(0, 2000, -100);
+    noiseSphere.setPosition(0, 1500, -100);
     animateSphereSizeDecrease(64);
     noiseSphere.setPointsSpeed(0.0001);
     noiseSphere.setRotationSpeed(0.001);
@@ -197,7 +241,7 @@ async function mainScript() {
     await utils.sleep(500)
 }
 
-function changeOnClickEvent() {
+function setMouseRayCaster() {
     ////////////////////////////
     // Raycaster
     ////////////////////////////
@@ -234,9 +278,13 @@ window.addEventListener('click', async () => {
     lastClickTime = currentTime;
     clickCount++;
     if (clickCount < 2) {
-        initialScript()
+        //initialScript()
     } else if (clickCount === 2) {
-        mainScript()
-        changeOnClickEvent()
+        //mainScript()
+        //setMouseRayCaster()
     }
 });
+
+initialScript()
+mainScript()
+setMouseRayCaster()
