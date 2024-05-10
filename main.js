@@ -5,6 +5,7 @@ import { sphere } from './src/options.js';
 import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import BentoGrid from './src/BentoGrid.js';
 
 // TODO: Sphere properties randomization
 // TODO: Make responsive size
@@ -16,7 +17,7 @@ let { scene, renderer, camera } = utils.setupScene(4000, 85)
 
 let grid;
 const noiseSphere = new PerlinNoiseSphere();
-let borard;
+let bentoBoard;
 
 camera.position.set(0, 200, 700);
 
@@ -69,6 +70,7 @@ animate();
 // Resize handler
 window.addEventListener('resize', () => utils.onWindowResize(renderer, camera), false);
 
+// Pablo Fornell text
 const fontLoader = new FontLoader();
 let textMesh;
 
@@ -94,7 +96,7 @@ function loadFont (font) {
     const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
     textMesh = new THREE.Mesh(textGeometry, textMaterial);
     textMesh.position.set(-width / 2, (-height / 2)+400, (-1000));
-
+    
     // Dark lines effect
     const edges = new THREE.EdgesGeometry(textGeometry);
     const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
@@ -106,6 +108,23 @@ function loadFont (font) {
 let fontData = JSON.parse(document.getElementById('fontData').textContent);
 loadFont(fontLoader.parse(fontData))
 
+// Bento grid boxes
+const boxes = [
+    [
+        { 
+            videoSrc: './public/stay-tuned.mp4', 
+            size: { x: 100, y: 100, z: 100 }, 
+            position: { x: -150, y: 100, z: -1000 }, 
+            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+        },
+        { 
+            videoSrc: './public/stay-tuned.mp4', 
+            size: { x: 100, y: 100, z: 100 }, 
+            position: { x: 150, y: 100, z: -1000 }, 
+            url: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXV6dndodThjdmppOXhyY2d6eTA2YWV1cmxrYmgzOTQ0MTJieDVjYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9tXuXDwXv4Uhr2Al3i/giphy.gif' 
+        },
+    ],
+];
 
 ////////////////////////////
 // Director
@@ -120,10 +139,6 @@ const speedFactorXtranslation = 0.01;
 // Create a raycaster and a mouse vector
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
-
-function displayHtmlContent() {
-    htmlContent.style.opacity = "1";
-}
 
 function captureMouseMovement() {
     const minX = -512;
@@ -162,8 +177,14 @@ async function mainScript() {
     // Disable camera
     camera.fov = 0;
     camera.updateProjectionMatrix();
+    // Bentobox grid
+    bentoBoard = new BentoGrid();
+    bentoBoard.createBentoGrid(boxes);
+    bentoBoard.getBoxes().forEach(box => scene.add(box));
+    // Grid
     displayGrid();
     animate = mainAnimation;
+    // Sphere
     noiseSphere.switchToShaderMaterial();
     noiseSphere.setPosition(0, 2000, -100);
     animateSphereSizeDecrease(64);
@@ -194,10 +215,12 @@ function changeOnClickEvent() {
 
         // If the box is among the intersected objects, open a link
         for (let i = 0; i < intersects.length; i++) {
-            if (intersects[i].object === borard) {
-                //window.open('http://localhost:5173/1%C2%BA_raycast/', '_blank'); // replace with your link
-                console.log('Box clicked');
-                return;
+            const boxes = bentoBoard.getBoxes();
+            for (let j = 0; j < boxes.length; j++) {
+                if (intersects[i].object === boxes[j]) {
+                    window.open(boxes[i].userData.url, '_blank');
+                    break;
+                }
             }
         }
     }, false);
