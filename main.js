@@ -47,7 +47,7 @@ function animateSphereSizeDecrease(decrease=100) {
 }
 
 function displayGrid() {
-    grid = new Grid(50, 4000);
+    grid = new Grid(75, 5000);
     scene.add(grid.getGrid());
     grid.setRotation(Math.PI / 2, 0, 0);
 }
@@ -134,7 +134,7 @@ const boxes = [
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 200, y: 200, z: 100+bentoDepth }, 
             position: { x: -300+bentoLeft, y: 200+bentoUp, z: 0 }, 
-            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
+            url: '' 
         },
         // 4 alone
         //  top
@@ -142,26 +142,26 @@ const boxes = [
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -150+bentoLeft, y: 250+bentoUp, z: 0 }, 
-            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
+            url: '' 
         },
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -50+bentoLeft, y: 250+bentoUp, z: 0 }, 
-            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
+            url: '' 
         },
         //  bottom
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -150+bentoLeft, y: 150+bentoUp, z: 0 }, 
-            url: 'https://f0rno.github.io/portafolio/coming_soon.html'
+            url: ''
         },
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -50+bentoLeft, y: 150+bentoUp, z: 0 }, 
-            url: 'https://f0rno.github.io/portafolio/coming_soon.html'
+            url: ''
         },
         // 1 alone
         { 
@@ -178,14 +178,14 @@ const boxes = [
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 200, y: 100, z: 100+bentoDepth }, 
             position: { x: -500+bentoLeft, y: 50+bentoUp, z: 0 }, 
-            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
+            url: '' 
         },
         // 2 alone
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -350+bentoLeft, y: 50+bentoUp, z: 0 }, 
-            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
+            url: '' 
         },
         { 
             videoSrc: 'x.mp4', 
@@ -198,27 +198,27 @@ const boxes = [
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 200, y: 100, z: 100+bentoDepth }, 
             position: { x: -100+bentoLeft, y: 50+bentoUp, z: 0 }, 
-            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
+            url: '' 
         },
         // Big 3 vertical
         {
             videoSrc: 'stay-tuned.mp4',
             size: { x: 100, y: 300, z: 100+bentoDepth },
             position: { x: 50+bentoLeft, y: 150+bentoUp, z: 0 },
-            url: 'https://f0rno.github.io/portafolio/coming_soon.html'
+            url: ''
         },
         // 2 alone
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: 150+bentoLeft, y: 50+bentoUp, z: 0 }, 
-            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
+            url: '' 
         },
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: 250+bentoLeft, y: 50+bentoUp, z: 0 }, 
-            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
+            url: '' 
         },
     ],
 ];
@@ -229,8 +229,8 @@ const boxes = [
 ////////////////////////////
 
 let clickCount = 0;
-let lastClickTime = 1000;
-const debounceTime = 0;
+let lastClickTime = 0;
+const debounceTime = 1000;
 let targetRotation = camera.rotation.x;
 let targetPositionX = camera.position.x;
 const speedFactorXtranslation = 0.01;
@@ -284,13 +284,11 @@ async function mainScript() {
     displayGrid();
     animate = mainAnimation;
     // Sphere
-    //noiseSphere.switchToShaderMaterial();
+    noiseSphere.switchToShaderMaterial();
     noiseSphere.setPosition(0, 1750, -100);
     animateSphereSizeDecrease(64);
     noiseSphere.setPointsSpeed(0.0001);
     noiseSphere.setRotationSpeed(0.001);
-    // Disable sphere
-    noiseSphere.mesh.visible = false;
     // Text
     scene.add(textMesh);
     // Enable camera with effect
@@ -320,8 +318,11 @@ function setMouseRayCaster() {
             const boxes = bentoBoard.getBoxes();
             for (let j = 0; j < boxes.length; j++) {
                 if (intersects[i].object === boxes[j]) {
+                    if (boxes[j].userData.url === '') {
+                        return;
+                    }
                     window.open(boxes[j].userData.url, '_blank');
-                    break;
+                    return;
                 }
             }
         }
@@ -336,13 +337,14 @@ window.addEventListener('click', async () => {
     lastClickTime = currentTime;
     clickCount++;
     if (clickCount < 2) {
-        //initialScript()
+        initialScript()
     } else if (clickCount === 2) {
-        //mainScript()
-        //setMouseRayCaster()
+        mainScript()
+        setMouseRayCaster()
     }
 });
-
+/*
 initialScript()
 mainScript()
 setMouseRayCaster()
+*/
