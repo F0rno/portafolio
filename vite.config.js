@@ -1,14 +1,8 @@
 import { defineConfig } from 'vite'
-import path from 'path'
 
 export default defineConfig({
   build: {
     outDir: 'dist',
-    base: '/portafolio/',
-    rollupOptions: {
-      input: {
-        main: path.resolve(__dirname, 'index.html'),
-      },
-    },
+    base: 'https://f0rno.github.io/portafolio/',
   },
 })
