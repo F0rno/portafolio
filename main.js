@@ -7,8 +7,11 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import BentoGrid from './src/BentoGrid.js';
 
+////////////////////////////
 // Deploy tutorial
 // https://medium.com/@aishwaryaparab1/deploying-vite-deploying-vite-app-to-github-pages-166fff40ffd3
+// npm run deploy
+////////////////////////////
 
 // TODO: Sphere properties randomization
 // TODO: Make responsive size
@@ -16,7 +19,7 @@ import BentoGrid from './src/BentoGrid.js';
 ////////////////////////////
 // Scene
 ////////////////////////////
-let { scene, renderer, camera } = utils.setupScene(4000, 85)
+let { scene, renderer, camera } = utils.setupScene(3000, 85)
 
 let grid;
 const noiseSphere = new PerlinNoiseSphere();
@@ -44,7 +47,7 @@ function animateSphereSizeDecrease(decrease=100) {
 }
 
 function displayGrid() {
-    grid = new Grid(100, 10000);
+    grid = new Grid(50, 4000);
     scene.add(grid.getGrid());
     grid.setRotation(Math.PI / 2, 0, 0);
 }
@@ -98,7 +101,7 @@ function loadFont (font) {
 
     const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
     textMesh = new THREE.Mesh(textGeometry, textMaterial);
-    textMesh.position.set(-width / 2, (-height / 2)+425, (-1000));
+    textMesh.position.set(-width / 2, (-height / 2)+425, (0));
     
     // Dark lines effect
     const edges = new THREE.EdgesGeometry(textGeometry);
@@ -113,7 +116,7 @@ loadFont(fontLoader.parse(fontData))
 
 const bentoUp = 0;
 const bentoLeft = 125;
-const bentoDepth = 50;
+const bentoDepth = 0;
 
 // Bento grid boxes
 const boxes = [
@@ -123,48 +126,48 @@ const boxes = [
         { 
             videoSrc: 'github.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: -450+bentoLeft, y: 150+bentoUp, z: -1000 }, 
+            position: { x: -450+bentoLeft, y: 150+bentoUp, z: 0 }, 
             url: 'https://github.com/F0rno' 
         },
         // Big 4
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 200, y: 200, z: 100+bentoDepth }, 
-            position: { x: -300+bentoLeft, y: 200+bentoUp, z: -1000 }, 
-            url: 'coming_soon.html' 
+            position: { x: -300+bentoLeft, y: 200+bentoUp, z: 0 }, 
+            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
         },
         // 4 alone
         //  top
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: -150+bentoLeft, y: 250+bentoUp, z: -1000 }, 
-            url: 'coming_soon.html' 
+            position: { x: -150+bentoLeft, y: 250+bentoUp, z: 0 }, 
+            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
         },
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: -50+bentoLeft, y: 250+bentoUp, z: -1000 }, 
-            url: 'coming_soon.html' 
+            position: { x: -50+bentoLeft, y: 250+bentoUp, z: 0 }, 
+            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
         },
         //  bottom
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: -150+bentoLeft, y: 150+bentoUp, z: -1000 }, 
-            url: 'coming_soon.html'
+            position: { x: -150+bentoLeft, y: 150+bentoUp, z: 0 }, 
+            url: 'https://f0rno.github.io/portafolio/coming_soon.html'
         },
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: -50+bentoLeft, y: 150+bentoUp, z: -1000 }, 
-            url: 'coming_soon.html'
+            position: { x: -50+bentoLeft, y: 150+bentoUp, z: 0 }, 
+            url: 'https://f0rno.github.io/portafolio/coming_soon.html'
         },
         // 1 alone
         { 
             videoSrc: 'linkedin.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: 150+bentoLeft, y: 150+bentoUp, z: -1000 }, 
+            position: { x: 150+bentoLeft, y: 150+bentoUp, z: 0 }, 
             url: 'https://www.linkedin.com/in/pablo-fornell/' 
         },
     ],
@@ -174,48 +177,48 @@ const boxes = [
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 200, y: 100, z: 100+bentoDepth }, 
-            position: { x: -500+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: 'coming_soon.html' 
+            position: { x: -500+bentoLeft, y: 50+bentoUp, z: 0 }, 
+            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
         },
         // 2 alone
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: -350+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: 'coming_soon.html' 
+            position: { x: -350+bentoLeft, y: 50+bentoUp, z: 0 }, 
+            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
         },
         { 
             videoSrc: 'x.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: -250+bentoLeft, y: 50+bentoUp, z: -1000 }, 
+            position: { x: -250+bentoLeft, y: 50+bentoUp, z: 0 }, 
             url: 'https://twitter.com/F_de_Fornell' 
         },
         // Big 2 horizontal
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 200, y: 100, z: 100+bentoDepth }, 
-            position: { x: -100+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: 'coming_soon.html' 
+            position: { x: -100+bentoLeft, y: 50+bentoUp, z: 0 }, 
+            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
         },
         // Big 3 vertical
         {
             videoSrc: 'stay-tuned.mp4',
             size: { x: 100, y: 300, z: 100+bentoDepth },
-            position: { x: 50+bentoLeft, y: 150+bentoUp, z: -1000 },
-            url: 'coming_soon.html'
+            position: { x: 50+bentoLeft, y: 150+bentoUp, z: 0 },
+            url: 'https://f0rno.github.io/portafolio/coming_soon.html'
         },
         // 2 alone
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: 150+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: 'coming_soon.html' 
+            position: { x: 150+bentoLeft, y: 50+bentoUp, z: 0 }, 
+            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
         },
         { 
             videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: 250+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: 'coming_soon.html' 
+            position: { x: 250+bentoLeft, y: 50+bentoUp, z: 0 }, 
+            url: 'https://f0rno.github.io/portafolio/coming_soon.html' 
         },
     ],
 ];
@@ -246,7 +249,7 @@ function captureMouseMovement() {
 
     window.addEventListener('wheel', (event) => {
         const scrollDirection = event.deltaY > 0 ? -1 : 1;
-        const maxDegreesLookUp = 85;
+        const maxDegreesLookUp = 55;
         const minDegreesLookDown = 0;
         const scrollSpeedFactor = 0.05;
 
@@ -271,6 +274,7 @@ async function mainScript() {
     camera.position.set(0, 128, 0);
     // Disable camera
     camera.fov = 0;
+    camera.position.z = 1000;
     camera.updateProjectionMatrix();
     // Bentobox grid
     bentoBoard = new BentoGrid();
@@ -329,14 +333,13 @@ window.addEventListener('click', async () => {
     lastClickTime = currentTime;
     clickCount++;
     if (clickCount < 2) {
-        initialScript()
+        //initialScript()
     } else if (clickCount === 2) {
-        mainScript()
-        setMouseRayCaster()
+        //mainScript()
+        //setMouseRayCaster()
     }
 });
-/*
+
 initialScript()
 mainScript()
 setMouseRayCaster()
-*/
