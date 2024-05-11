@@ -242,12 +242,13 @@ function captureMouseMovement() {
     const minX = -512;
     const maxX = 512;
 
-    window.addEventListener('mousemove', (event) => {
-        const mousePercentageX = event.clientX / window.innerWidth;
+    function handleMove(event) {
+        const clientX = event.clientX || event.touches[0].clientX;
+        const mousePercentageX = clientX / window.innerWidth;
         targetPositionX = minX + (maxX - minX) * mousePercentageX;
-    });
+    }
 
-    window.addEventListener('wheel', (event) => {
+    function handleScroll(event) {
         const scrollDirection = event.deltaY > 0 ? -1 : 1;
         const maxDegreesLookUp = 55;
         const minDegreesLookDown = 0;
@@ -257,7 +258,13 @@ function captureMouseMovement() {
         const minRotation = minDegreesLookDown * Math.PI / 180;
 
         targetRotation = Math.min(Math.max(targetRotation - scrollDirection * scrollSpeedFactor, minRotation), maxRotation);
-    });
+    }
+
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('touchmove', handleMove);
+
+    window.addEventListener('wheel', handleScroll);
+    window.addEventListener('touchstart', handleScroll);
 }
 
 function initialScript() {
