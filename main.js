@@ -284,11 +284,14 @@ async function mainScript() {
     displayGrid();
     animate = mainAnimation;
     // Sphere
-    noiseSphere.switchToShaderMaterial();
+    //noiseSphere.switchToShaderMaterial();
     noiseSphere.setPosition(0, 1750, -100);
     animateSphereSizeDecrease(64);
     noiseSphere.setPointsSpeed(0.0001);
     noiseSphere.setRotationSpeed(0.001);
+    // Disable sphere
+    noiseSphere.mesh.visible = false;
+    // Text
     scene.add(textMesh);
     // Enable camera with effect
     utils.increaseFov(camera, 4.5, 128);
