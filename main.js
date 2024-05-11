@@ -10,7 +10,9 @@ import BentoGrid from './src/BentoGrid.js';
 // TODO: Sphere properties randomization
 // TODO: Make responsive size
 
-// Three.js scene setup
+////////////////////////////
+// Scene
+////////////////////////////
 let { scene, renderer, camera } = utils.setupScene(4000, 85)
 
 let grid;
@@ -93,7 +95,7 @@ function loadFont (font) {
 
     const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
     textMesh = new THREE.Mesh(textGeometry, textMaterial);
-    textMesh.position.set(-width / 2, (-height / 2)+400, (-1000));
+    textMesh.position.set(-width / 2, (-height / 2)+425, (-1000));
     
     // Dark lines effect
     const edges = new THREE.EdgesGeometry(textGeometry);
@@ -107,108 +109,110 @@ let fontData = JSON.parse(document.getElementById('fontData').textContent);
 loadFont(fontLoader.parse(fontData))
 
 const bentoUp = 0;
-const bentoLeft = 150;
+const bentoLeft = 125;
+const bentoDepth = 50;
 
 // Bento grid boxes
 const boxes = [
+    // Upper row
     [
         // 1 alone
         { 
-            videoSrc: './public/stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100 }, 
+            videoSrc: './public/github.mp4', 
+            size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -450+bentoLeft, y: 150+bentoUp, z: -1000 }, 
-            url: '' 
+            url: 'https://github.com/F0rno' 
         },
         // Big 4
         { 
             videoSrc: './public/stay-tuned.mp4', 
-            size: { x: 200, y: 200, z: 100 }, 
+            size: { x: 200, y: 200, z: 100+bentoDepth }, 
             position: { x: -300+bentoLeft, y: 200+bentoUp, z: -1000 }, 
-            url: '' 
+            url: 'coming_soon.html' 
         },
         // 4 alone
         //  top
         { 
             videoSrc: './public/stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100 }, 
+            size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -150+bentoLeft, y: 250+bentoUp, z: -1000 }, 
-            url: '' 
+            url: 'coming_soon.html' 
         },
         { 
             videoSrc: './public/stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100 }, 
+            size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -50+bentoLeft, y: 250+bentoUp, z: -1000 }, 
-            url: '' 
+            url: 'coming_soon.html' 
         },
         //  bottom
         { 
             videoSrc: './public/stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100 }, 
+            size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -150+bentoLeft, y: 150+bentoUp, z: -1000 }, 
-            url: ''
+            url: 'coming_soon.html'
         },
         { 
             videoSrc: './public/stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100 }, 
+            size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -50+bentoLeft, y: 150+bentoUp, z: -1000 }, 
-            url: ''
+            url: 'coming_soon.html'
         },
         // 1 alone
         { 
-            videoSrc: './public/stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100 }, 
+            videoSrc: './public/linkedin.mp4', 
+            size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: 150+bentoLeft, y: 150+bentoUp, z: -1000 }, 
-            url: '' 
+            url: 'https://www.linkedin.com/in/pablo-fornell/' 
         },
     ],
-
+    // Lower row
     [
         // Big 2 horizontal
         { 
             videoSrc: './public/stay-tuned.mp4', 
-            size: { x: 200, y: 100, z: 100 }, 
+            size: { x: 200, y: 100, z: 100+bentoDepth }, 
             position: { x: -500+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: '' 
+            url: 'coming_soon.html' 
         },
         // 2 alone
         { 
             videoSrc: './public/stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100 }, 
+            size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -350+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: '' 
+            url: 'coming_soon.html' 
         },
         { 
-            videoSrc: './public/stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100 }, 
+            videoSrc: './public/x.mp4', 
+            size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -250+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: '' 
+            url: 'https://twitter.com/F_de_Fornell' 
         },
         // Big 2 horizontal
         { 
             videoSrc: './public/stay-tuned.mp4', 
-            size: { x: 200, y: 100, z: 100 }, 
+            size: { x: 200, y: 100, z: 100+bentoDepth }, 
             position: { x: -100+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: '' 
+            url: 'coming_soon.html' 
         },
         // Big 3 vertical
         {
             videoSrc: './public/stay-tuned.mp4',
-            size: { x: 100, y: 300, z: 100 },
+            size: { x: 100, y: 300, z: 100+bentoDepth },
             position: { x: 50+bentoLeft, y: 150+bentoUp, z: -1000 },
-            url: ''
+            url: 'coming_soon.html'
         },
         // 2 alone
         { 
             videoSrc: './public/stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100 }, 
+            size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: 150+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: '' 
+            url: 'coming_soon.html' 
         },
         { 
             videoSrc: './public/stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100 }, 
+            size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: 250+bentoLeft, y: 50+bentoUp, z: -1000 }, 
-            url: '' 
+            url: 'coming_soon.html' 
         },
     ],
 ];
@@ -219,7 +223,7 @@ const boxes = [
 ////////////////////////////
 
 let clickCount = 0;
-let lastClickTime = 0; // TODO: 1000 
+let lastClickTime = 1000;
 const debounceTime = 0;
 let targetRotation = camera.rotation.x;
 let targetPositionX = camera.position.x;
@@ -306,7 +310,7 @@ function setMouseRayCaster() {
             const boxes = bentoBoard.getBoxes();
             for (let j = 0; j < boxes.length; j++) {
                 if (intersects[i].object === boxes[j]) {
-                    window.open(boxes[i].userData.url, '_blank');
+                    window.open(boxes[j].userData.url, '_blank');
                     break;
                 }
             }
