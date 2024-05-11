@@ -7,6 +7,9 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import BentoGrid from './src/BentoGrid.js';
 
+// Deploy tutorial
+// https://medium.com/@aishwaryaparab1/deploying-vite-deploying-vite-app-to-github-pages-166fff40ffd3
+
 // TODO: Sphere properties randomization
 // TODO: Make responsive size
 
