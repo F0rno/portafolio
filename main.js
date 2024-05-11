@@ -118,14 +118,14 @@ const boxes = [
     [
         // 1 alone
         { 
-            videoSrc: './public/github.mp4', 
+            videoSrc: 'github.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -450+bentoLeft, y: 150+bentoUp, z: -1000 }, 
             url: 'https://github.com/F0rno' 
         },
         // Big 4
         { 
-            videoSrc: './public/stay-tuned.mp4', 
+            videoSrc: 'stay-tuned.mp4', 
             size: { x: 200, y: 200, z: 100+bentoDepth }, 
             position: { x: -300+bentoLeft, y: 200+bentoUp, z: -1000 }, 
             url: 'coming_soon.html' 
@@ -133,33 +133,33 @@ const boxes = [
         // 4 alone
         //  top
         { 
-            videoSrc: './public/stay-tuned.mp4', 
+            videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -150+bentoLeft, y: 250+bentoUp, z: -1000 }, 
             url: 'coming_soon.html' 
         },
         { 
-            videoSrc: './public/stay-tuned.mp4', 
+            videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -50+bentoLeft, y: 250+bentoUp, z: -1000 }, 
             url: 'coming_soon.html' 
         },
         //  bottom
         { 
-            videoSrc: './public/stay-tuned.mp4', 
+            videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -150+bentoLeft, y: 150+bentoUp, z: -1000 }, 
             url: 'coming_soon.html'
         },
         { 
-            videoSrc: './public/stay-tuned.mp4', 
+            videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -50+bentoLeft, y: 150+bentoUp, z: -1000 }, 
             url: 'coming_soon.html'
         },
         // 1 alone
         { 
-            videoSrc: './public/linkedin.mp4', 
+            videoSrc: 'linkedin.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: 150+bentoLeft, y: 150+bentoUp, z: -1000 }, 
             url: 'https://www.linkedin.com/in/pablo-fornell/' 
@@ -169,47 +169,47 @@ const boxes = [
     [
         // Big 2 horizontal
         { 
-            videoSrc: './public/stay-tuned.mp4', 
+            videoSrc: 'stay-tuned.mp4', 
             size: { x: 200, y: 100, z: 100+bentoDepth }, 
             position: { x: -500+bentoLeft, y: 50+bentoUp, z: -1000 }, 
             url: 'coming_soon.html' 
         },
         // 2 alone
         { 
-            videoSrc: './public/stay-tuned.mp4', 
+            videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -350+bentoLeft, y: 50+bentoUp, z: -1000 }, 
             url: 'coming_soon.html' 
         },
         { 
-            videoSrc: './public/x.mp4', 
+            videoSrc: 'x.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -250+bentoLeft, y: 50+bentoUp, z: -1000 }, 
             url: 'https://twitter.com/F_de_Fornell' 
         },
         // Big 2 horizontal
         { 
-            videoSrc: './public/stay-tuned.mp4', 
+            videoSrc: 'stay-tuned.mp4', 
             size: { x: 200, y: 100, z: 100+bentoDepth }, 
             position: { x: -100+bentoLeft, y: 50+bentoUp, z: -1000 }, 
             url: 'coming_soon.html' 
         },
         // Big 3 vertical
         {
-            videoSrc: './public/stay-tuned.mp4',
+            videoSrc: 'stay-tuned.mp4',
             size: { x: 100, y: 300, z: 100+bentoDepth },
             position: { x: 50+bentoLeft, y: 150+bentoUp, z: -1000 },
             url: 'coming_soon.html'
         },
         // 2 alone
         { 
-            videoSrc: './public/stay-tuned.mp4', 
+            videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: 150+bentoLeft, y: 50+bentoUp, z: -1000 }, 
             url: 'coming_soon.html' 
         },
         { 
-            videoSrc: './public/stay-tuned.mp4', 
+            videoSrc: 'stay-tuned.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: 250+bentoLeft, y: 50+bentoUp, z: -1000 }, 
             url: 'coming_soon.html' 
