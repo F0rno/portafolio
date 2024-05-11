@@ -326,13 +326,14 @@ window.addEventListener('click', async () => {
     lastClickTime = currentTime;
     clickCount++;
     if (clickCount < 2) {
-        //initialScript()
+        initialScript()
     } else if (clickCount === 2) {
-        //mainScript()
-        //setMouseRayCaster()
+        mainScript()
+        setMouseRayCaster()
     }
 });
-
+/*
 initialScript()
 mainScript()
 setMouseRayCaster()
+*/
