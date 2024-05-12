@@ -1,7 +1,6 @@
 import * as utils from './src/utils.js';
 import Grid from './src/grid.js';
 import PerlinNoiseSphere from './src/PerlinNoiseSphere.js';
-import { sphere } from './src/options.js';
 import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
@@ -12,9 +11,6 @@ import BentoGrid from './src/BentoGrid.js';
 // https://medium.com/@aishwaryaparab1/deploying-vite-deploying-vite-app-to-github-pages-166fff40ffd3
 // npm run deploy
 ////////////////////////////
-
-// TODO: Sphere properties randomization
-// TODO: Make responsive size
 
 ////////////////////////////
 // Scene
@@ -47,7 +43,7 @@ function animateSphereSizeDecrease(decrease=100) {
 }
 
 function displayGrid() {
-    grid = new Grid(75, 5000);
+    grid = new Grid(100, 8000);
     scene.add(grid.getGrid());
     grid.setRotation(Math.PI / 2, 0, 0);
 }
@@ -242,13 +238,12 @@ function captureMouseMovement() {
     const minX = -512;
     const maxX = 512;
 
-    function handleMove(event) {
-        const clientX = event.clientX || event.touches[0].clientX;
-        const mousePercentageX = clientX / window.innerWidth;
+    window.addEventListener('mousemove', (event) => {
+        const mousePercentageX = event.clientX / window.innerWidth;
         targetPositionX = minX + (maxX - minX) * mousePercentageX;
-    }
+    });
 
-    function handleScroll(event) {
+    window.addEventListener('wheel', (event) => {
         const scrollDirection = event.deltaY > 0 ? -1 : 1;
         const maxDegreesLookUp = 55;
         const minDegreesLookDown = 0;
@@ -258,13 +253,7 @@ function captureMouseMovement() {
         const minRotation = minDegreesLookDown * Math.PI / 180;
 
         targetRotation = Math.min(Math.max(targetRotation - scrollDirection * scrollSpeedFactor, minRotation), maxRotation);
-    }
-
-    window.addEventListener('mousemove', handleMove);
-    window.addEventListener('touchmove', handleMove);
-
-    window.addEventListener('wheel', handleScroll);
-    window.addEventListener('touchstart', handleScroll);
+    });
 }
 
 function initialScript() {
