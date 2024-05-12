@@ -17,14 +17,22 @@ import BentoGrid from './src/BentoGrid.js';
 ////////////////////////////
 let { scene, renderer, camera } = utils.setupScene(3000, 85)
 
-let grid;
+const screenWidth = window.innerWidth;
+const screenHeight = window.innerHeight;
 const noiseSphere = new PerlinNoiseSphere();
+let grid;
 let bentoBoard;
+
+let normalizedSphereSize = parseInt(12 * (screenWidth * screenHeight) / 500_000);
+normalizedSphereSize = Math.max(normalizedSphereSize, 24);
+let normalizedSpherePointsSize = parseInt((screenWidth * screenHeight) / 600_000);
+normalizedSpherePointsSize = Math.max(normalizedSpherePointsSize, 1.25);
 
 camera.position.set(0, 200, 700);
 
-noiseSphere.switchToStandardMaterial();
-noiseSphere.increaseSize(41);
+noiseSphere.switchToStandardMaterial(normalizedSpherePointsSize);
+noiseSphere.increaseSize(normalizedSphereSize);
+
 noiseSphere.setPosition(0, 200, 0);
 scene.add(noiseSphere.mesh);
 

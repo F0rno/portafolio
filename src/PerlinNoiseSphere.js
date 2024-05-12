@@ -74,10 +74,11 @@ class PerlinNoiseSphere {
     this.mesh.position.set(x, y, z);
   }
 
-  switchToStandardMaterial() {
+  switchToStandardMaterial(size=2) {
     let points = this.mesh.children[0];
-    let standardMaterial = new THREE.MeshStandardMaterial({
+    let standardMaterial = new THREE.PointsMaterial({
         color: sphere.color,
+        size: size,
     });
     points.material = standardMaterial;
   }
