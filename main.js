@@ -10,6 +10,8 @@ import { AudioAnalyzer } from './src/AudioAnalizer.js';
 ////////////////////////////
 // Deploy tutorial
 // https://medium.com/@aishwaryaparab1/deploying-vite-deploying-vite-app-to-github-pages-166fff40ffd3
+// Remove the origin repo
+// git branch -D gh-pages
 // npm run deploy
 ////////////////////////////
 
@@ -21,7 +23,7 @@ let { scene, renderer, camera } = utils.setupScene(3000, 85)
 const screenWidth = window.innerWidth;
 const screenHeight = window.innerHeight;
 const noiseSphere = new PerlinNoiseSphere();
-const audioAnalyzer = new AudioAnalyzer('Stellar-Odyssey.mpeg');
+const audioAnalyzer = new AudioAnalyzer('Stellar-Odyssey.mp3');
 const bentoBoard = new BentoGrid();
 let grid;
 
