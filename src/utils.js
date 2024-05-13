@@ -55,3 +55,4 @@ export function increaseFov(camera, target=45, speed=0.1) {
         }, i * speed);
     }
 }
+

@@ -47,7 +47,7 @@ class PerlinNoiseSphere {
   }
 
   animate() {
-    var performance = Date.now() * 0.003;
+    const performance = Date.now() * 0.003;
 
     this.mesh.rotation.y += this.options.perlin.vel;
     this.mesh.rotation.x = (Math.sin(performance * this.options.spin.sinVel) * this.options.spin.ampVel) * Math.PI / 180;

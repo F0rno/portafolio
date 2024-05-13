@@ -1,10 +1,11 @@
 import * as utils from './src/utils.js';
-import Grid from './src/grid.js';
+import Grid from './src/Grid.js';
 import PerlinNoiseSphere from './src/PerlinNoiseSphere.js';
 import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import BentoGrid from './src/BentoGrid.js';
+import { AudioAnalyzer } from './src/AudioAnalizer.js';
 
 ////////////////////////////
 // Deploy tutorial
@@ -20,9 +21,11 @@ let { scene, renderer, camera } = utils.setupScene(3000, 85)
 const screenWidth = window.innerWidth;
 const screenHeight = window.innerHeight;
 const noiseSphere = new PerlinNoiseSphere();
+const audioAnalyzer = new AudioAnalyzer('Stellar-Odyssey.mpeg');
 let grid;
 let bentoBoard;
 
+const sphereMusicMultiplier = 175;
 let normalizedSphereSize = parseInt(12 * (screenWidth * screenHeight) / 500_000);
 normalizedSphereSize = Math.max(normalizedSphereSize, 24);
 let normalizedSpherePointsSize = parseInt((screenWidth * screenHeight) / 600_000);
@@ -36,7 +39,7 @@ noiseSphere.increaseSize(normalizedSphereSize);
 noiseSphere.setPosition(0, 200, 0);
 scene.add(noiseSphere.mesh);
 
-function animateSphereSizeIncrease(speed = 10) {
+function animateSphereSizeIncreaseWithDelay(speed = 10) {
     for (let i = 0; i < 100; i++) {
         setTimeout(() => {
             noiseSphere.increaseSize(1.01);
@@ -47,6 +50,12 @@ function animateSphereSizeIncrease(speed = 10) {
 function animateSphereSizeDecrease(decrease=100) {
     for (let i = 0; i < decrease; i++) {
         noiseSphere.increaseSize(0.99);
+    }
+}
+
+function animateSphereSizeIncrease(increase = 10) {
+    for (let i = 0; i < increase; i++) {
+        noiseSphere.increaseSize(1.01);
     }
 }
 
@@ -70,6 +79,14 @@ function mainAnimation() {
 
     grid.animateGridPerlinNoise();
     noiseSphere.animate();
+
+    // Sphere move with music!!!
+    const data = audioAnalyzer.getFrequencyData();
+    if (data) {
+        let scale = THREE.MathUtils.mapLinear(data[0], 0, 255, 0.5, 2);
+        scale *= sphereMusicMultiplier;
+        noiseSphere.getMesh().scale.set(scale, scale, scale);
+    }
 
     renderer.render(scene, camera);
 }
@@ -251,6 +268,8 @@ function captureMouseMovement() {
         targetPositionX = minX + (maxX - minX) * mousePercentageX;
     });
 
+    let isAudioPlaying = false;
+
     window.addEventListener('wheel', (event) => {
         const scrollDirection = event.deltaY > 0 ? -1 : 1;
         const maxDegreesLookUp = 55;
@@ -261,16 +280,22 @@ function captureMouseMovement() {
         const minRotation = minDegreesLookDown * Math.PI / 180;
 
         targetRotation = Math.min(Math.max(targetRotation - scrollDirection * scrollSpeedFactor, minRotation), maxRotation);
+
+        // If user is looking up, load audio
+        if (targetRotation === maxRotation && !isAudioPlaying) {
+            isAudioPlaying = true;
+            audioAnalyzer.loadAudio();
+        }
     });
 }
 
 function initialScript() {
-    animateSphereSizeIncrease()
+    animateSphereSizeIncreaseWithDelay()
 }
 
 async function mainScript() {
     // Sphere expansion
-    animateSphereSizeIncrease(8)
+    animateSphereSizeIncreaseWithDelay(8)
     await utils.sleep(750)
     // Scene transition to black
     utils.changeColor(scene.background, new THREE.Color(0x000000), 0.05);
@@ -319,6 +344,7 @@ function setMouseRayCaster() {
 
         // If the box is among the intersected objects, open a link
         for (let i = 0; i < intersects.length; i++) {
+            // If click a box of the bento grid
             const boxes = bentoBoard.getBoxes();
             for (let j = 0; j < boxes.length; j++) {
                 if (intersects[i].object === boxes[j]) {
