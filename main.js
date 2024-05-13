@@ -22,9 +22,11 @@ const screenWidth = window.innerWidth;
 const screenHeight = window.innerHeight;
 const noiseSphere = new PerlinNoiseSphere();
 const audioAnalyzer = new AudioAnalyzer('Stellar-Odyssey.mpeg');
+const bentoBoard = new BentoGrid();
 let grid;
-let bentoBoard;
 
+
+// TODO: Check if removing heigh makes the responsive design better
 const sphereMusicMultiplier = 175;
 let normalizedSphereSize = parseInt(12 * (screenWidth * screenHeight) / 500_000);
 normalizedSphereSize = Math.max(normalizedSphereSize, 24);
@@ -53,12 +55,6 @@ function animateSphereSizeDecrease(decrease=100) {
     }
 }
 
-function animateSphereSizeIncrease(increase = 10) {
-    for (let i = 0; i < increase; i++) {
-        noiseSphere.increaseSize(1.01);
-    }
-}
-
 function displayGrid() {
     grid = new Grid(100, 8000);
     scene.add(grid.getGrid());
@@ -73,13 +69,13 @@ function initialAnimation() {
 
 function mainAnimation() {
     requestAnimationFrame(animate);
-
+    
     camera.rotation.x += (targetRotation - camera.rotation.x) * 0.05;
     camera.position.x += (targetPositionX - camera.position.x) * speedFactorXtranslation;
-
+    
     grid.animateGridPerlinNoise();
     noiseSphere.animate();
-
+    
     // Sphere move with music!!!
     const data = audioAnalyzer.getFrequencyData();
     if (data) {
@@ -87,7 +83,7 @@ function mainAnimation() {
         scale *= sphereMusicMultiplier;
         noiseSphere.getMesh().scale.set(scale, scale, scale);
     }
-
+    
     renderer.render(scene, camera);
 }
 
@@ -113,13 +109,13 @@ function loadFont (font) {
         bevelOffset: 0,
         bevelSegments: 5
     });
-
+    
     textGeometry.computeBoundingBox();
-
+    
     const width = textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x;
     const height = textGeometry.boundingBox.max.y - textGeometry.boundingBox.min.y;
     const depth = textGeometry.boundingBox.max.z - textGeometry.boundingBox.min.z;
-
+    
     const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
     textMesh = new THREE.Mesh(textGeometry, textMaterial);
     textMesh.position.set(-width / 2, (-height / 2)+425, (0));
@@ -128,7 +124,7 @@ function loadFont (font) {
     const edges = new THREE.EdgesGeometry(textGeometry);
     const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
     const outline = new THREE.LineSegments(edges, lineMaterial);
-
+    
     textMesh.add(outline);
 };
 
@@ -243,6 +239,7 @@ const boxes = [
         },
     ],
 ];
+bentoBoard.createBentoGrid(boxes);
 
 
 ////////////////////////////
@@ -306,8 +303,6 @@ async function mainScript() {
     camera.position.z = 1000;
     camera.updateProjectionMatrix();
     // Bentobox grid
-    bentoBoard = new BentoGrid();
-    bentoBoard.createBentoGrid(boxes);
     bentoBoard.getBoxes().forEach(box => scene.add(box));
     // Grid
     displayGrid();
