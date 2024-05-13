@@ -11,7 +11,6 @@ import { AudioAnalyzer } from './src/AudioAnalizer.js';
 // Deploy tutorial
 // https://medium.com/@aishwaryaparab1/deploying-vite-deploying-vite-app-to-github-pages-166fff40ffd3
 // Remove the origin repo
-// git branch -D gh-pages
 // npm run deploy
 ////////////////////////////
 
