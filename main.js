@@ -21,18 +21,15 @@ import { AudioAnalyzer } from './src/AudioAnalizer.js';
 let { scene, renderer, camera } = utils.setupScene(3000, 85)
 
 const screenWidth = window.innerWidth;
-const screenHeight = window.innerHeight;
 const noiseSphere = new PerlinNoiseSphere();
 const audioAnalyzer = new AudioAnalyzer('Stellar-Odyssey.mp3');
 const bentoBoard = new BentoGrid();
 let grid;
 
-
-// TODO: Check if removing heigh makes the responsive design better
 const sphereMusicMultiplier = 175;
-let normalizedSphereSize = parseInt(12 * (screenWidth * screenHeight) / 500_000);
+let normalizedSphereSize = parseInt(12 * screenWidth / 512);
 normalizedSphereSize = Math.max(normalizedSphereSize, 24);
-let normalizedSpherePointsSize = parseInt((screenWidth * screenHeight) / 600_000);
+let normalizedSpherePointsSize = parseInt(screenWidth / 675);
 normalizedSpherePointsSize = Math.max(normalizedSpherePointsSize, 1.25);
 
 camera.position.set(0, 200, 700);
