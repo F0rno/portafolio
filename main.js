@@ -167,10 +167,10 @@ const boxes = [
         },
         //  bottom
         { 
-            videoSrc: 'stay-tuned.mp4', 
+            videoSrc: 'marina.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -150+bentoLeft, y: 150+bentoUp, z: 0 }, 
-            url: ''
+            url: 'https://github.com/F0rno/Marina-8bits-Computer'
         },
         { 
             videoSrc: 'stay-tuned.mp4', 
