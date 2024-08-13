@@ -173,10 +173,10 @@ const boxes = [
             url: 'https://github.com/F0rno/Marina-8bits-Computer'
         },
         { 
-            videoSrc: 'stay-tuned.mp4', 
+            videoSrc: 'vago.mp4', 
             size: { x: 100, y: 100, z: 100+bentoDepth }, 
             position: { x: -50+bentoLeft, y: 150+bentoUp, z: 0 }, 
-            url: ''
+            url: 'https://github.com/F0rno/Vago-summarizer'
         },
         // 1 alone
         { 
