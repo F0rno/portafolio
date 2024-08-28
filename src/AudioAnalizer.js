@@ -1,4 +1,4 @@
-export class AudioAnalyzer {
+export default class AudioAnalyzer {
     constructor(audioFilePath) {
         this.audioContext = new AudioContext();
         this.analyser = null;

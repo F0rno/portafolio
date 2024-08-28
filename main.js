@@ -1,12 +1,11 @@
+import PerlinNoiseSphere from './src/PerlinNoiseSphere.js';
+import AudioAnalyzer from './src/AudioAnalizer.js';
+import BentoGrid from './src/BentoGrid.js';
+import { boxes } from './src/options.js';
 import * as utils from './src/utils.js';
 import Grid from './src/Grid.js';
-import PerlinNoiseSphere from './src/PerlinNoiseSphere.js';
 import * as THREE from 'three';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-import BentoGrid from './src/BentoGrid.js';
-import { AudioAnalyzer } from './src/AudioAnalizer.js';
-import { boxes } from './src/options.js';
+import FontTextMeshLoader from './src/Font.js';
 
 ////////////////////////////
 // Deploy tutorial
@@ -21,10 +20,12 @@ import { boxes } from './src/options.js';
 let { scene, renderer, camera } = utils.setupScene(3000, 85)
 
 const screenWidth = window.innerWidth;
+const fontData = JSON.parse(document.getElementById('fontData').textContent);
 
 const noiseSphere = new PerlinNoiseSphere();
 const audioAnalyzer = new AudioAnalyzer('Stellar-Odyssey.mp3');
 const bentoBoard = new BentoGrid();
+const textMeshLoader = new FontTextMeshLoader('Pablo Fornell', fontData);
 let grid;
 
 // Sphere setup
@@ -78,48 +79,6 @@ function mainAnimationLoop() {
 let animate = initialAnimationScript;
 animate();
 
-// Pablo Fornell text
-const fontLoader = new FontLoader();
-let textMesh;
-
-function loadFont (font) {
-    const textGeometry = new TextGeometry('Pablo  Fornell', {
-        font: font,
-        size: 75,
-        depth: 25,
-        curveSegments: 12,
-        bevelEnabled: true,
-        bevelThickness: 0.1,
-        bevelSize: 0.01,
-        bevelOffset: 0,
-        bevelSegments: 5
-    });
-    
-    textGeometry.computeBoundingBox();
-    
-    const width = textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x;
-    const height = textGeometry.boundingBox.max.y - textGeometry.boundingBox.min.y;
-    const depth = textGeometry.boundingBox.max.z - textGeometry.boundingBox.min.z;
-    
-    const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    textMesh = new THREE.Mesh(textGeometry, textMaterial);
-    textMesh.position.set(-width / 2, (-height / 2)+425, (0));
-    
-    // Dark lines effect
-    const edges = new THREE.EdgesGeometry(textGeometry);
-    const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
-    const outline = new THREE.LineSegments(edges, lineMaterial);
-    
-    textMesh.add(outline);
-};
-
-let fontData = JSON.parse(document.getElementById('fontData').textContent);
-loadFont(fontLoader.parse(fontData))
-
-
-// Bento board
-bentoBoard.createBentoGrid(boxes);
-
 
 ////////////////////////////
 // Director
@@ -149,6 +108,7 @@ async function introAnimationScript() {
     camera.position.z = 1000;
     camera.updateProjectionMatrix();
     // Bentobox grid
+    bentoBoard.createBentoGrid(boxes);
     bentoBoard.getBoxes().forEach(box => scene.add(box));
     // Grid
     displayGrid();
@@ -160,6 +120,8 @@ async function introAnimationScript() {
     noiseSphere.setPointsSpeed(0.0001);
     noiseSphere.setRotationSpeed(0.001);
     // Text
+    textMeshLoader.loadFont();
+    const textMesh = textMeshLoader.getTextMesh();
     scene.add(textMesh);
     // Enable camera with effect
     utils.increaseFov(camera, 4.5, 128);
