@@ -103,6 +103,20 @@ class PerlinNoiseSphere {
   hidden() {
     this.mesh.visible = false;
   }
+
+  animateSphereSizeIncreaseWithDelay(speed = 10) {
+    for (let i = 0; i < 100; i++) {
+        setTimeout(() => {
+            this.increaseSize(1.01);
+        }, i * speed);
+    }
+  }
+
+  animateSphereSizeDecrease(decrease=100) {
+    for (let i = 0; i < decrease; i++) {
+      this.increaseSize(0.99);
+    }
+  }
 }
 
 export default PerlinNoiseSphere;

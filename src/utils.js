@@ -41,11 +41,9 @@ export function changeColor(color, newColor, speed=0.1) {
     }
 }
 
-// Sleep function
 export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 
 export function increaseFov(camera, target=45, speed=0.1) {
     for (let i = 0.0; i < target; i += 0.1) {

@@ -6,6 +6,7 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import BentoGrid from './src/BentoGrid.js';
 import { AudioAnalyzer } from './src/AudioAnalizer.js';
+import { boxes } from './src/options.js';
 
 ////////////////////////////
 // Deploy tutorial
@@ -20,38 +21,28 @@ import { AudioAnalyzer } from './src/AudioAnalizer.js';
 let { scene, renderer, camera } = utils.setupScene(3000, 85)
 
 const screenWidth = window.innerWidth;
+
 const noiseSphere = new PerlinNoiseSphere();
 const audioAnalyzer = new AudioAnalyzer('Stellar-Odyssey.mp3');
 const bentoBoard = new BentoGrid();
 let grid;
 
+
+// Sphere setup
 const sphereMusicMultiplier = 175;
 let normalizedSphereSize = parseInt(12 * screenWidth / 512);
 normalizedSphereSize = Math.max(normalizedSphereSize, 24);
 let normalizedSpherePointsSize = parseInt(screenWidth / 675);
 normalizedSpherePointsSize = Math.max(normalizedSpherePointsSize, 1.25);
 
-camera.position.set(0, 200, 700);
-
 noiseSphere.switchToStandardMaterial(normalizedSpherePointsSize);
 noiseSphere.increaseSize(normalizedSphereSize);
-
 noiseSphere.setPosition(0, 200, 0);
+
 scene.add(noiseSphere.mesh);
 
-function animateSphereSizeIncreaseWithDelay(speed = 10) {
-    for (let i = 0; i < 100; i++) {
-        setTimeout(() => {
-            noiseSphere.increaseSize(1.01);
-        }, i * speed);
-    }
-}
-
-function animateSphereSizeDecrease(decrease=100) {
-    for (let i = 0; i < decrease; i++) {
-        noiseSphere.increaseSize(0.99);
-    }
-}
+// Camera setup
+camera.position.set(0, 200, 700);
 
 function displayGrid() {
     grid = new Grid(100, 8000);
@@ -59,13 +50,13 @@ function displayGrid() {
     grid.setRotation(Math.PI / 2, 0, 0);
 }
 
-function initialAnimation() {
+function initialAnimationScript() {
     requestAnimationFrame(animate);
     noiseSphere.animate();
     renderer.render(scene, camera);
 }
 
-function mainAnimation() {
+function mainAnimationLoop() {
     requestAnimationFrame(animate);
     
     camera.rotation.x += (targetRotation - camera.rotation.x) * 0.05;
@@ -85,11 +76,8 @@ function mainAnimation() {
     renderer.render(scene, camera);
 }
 
-let animate = initialAnimation;
+let animate = initialAnimationScript;
 animate();
-
-// Resize handler
-window.addEventListener('resize', () => utils.onWindowResize(renderer, camera), false);
 
 // Pablo Fornell text
 const fontLoader = new FontLoader();
@@ -129,114 +117,8 @@ function loadFont (font) {
 let fontData = JSON.parse(document.getElementById('fontData').textContent);
 loadFont(fontLoader.parse(fontData))
 
-const bentoUp = 0;
-const bentoLeft = 125;
-const bentoDepth = 0;
 
-// Bento grid boxes
-const boxes = [
-    // Upper row
-    [
-        // 1 alone
-        { 
-            videoSrc: 'github.mp4', 
-            size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: -450+bentoLeft, y: 150+bentoUp, z: 0 }, 
-            url: 'https://github.com/F0rno' 
-        },
-        // Big 4
-        { 
-            videoSrc: 'stay-tuned.mp4', 
-            size: { x: 200, y: 200, z: 100+bentoDepth }, 
-            position: { x: -300+bentoLeft, y: 200+bentoUp, z: 0 }, 
-            url: '' 
-        },
-        // 4 alone
-        //  top
-        { 
-            videoSrc: 'stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: -150+bentoLeft, y: 250+bentoUp, z: 0 }, 
-            url: '' 
-        },
-        { 
-            videoSrc: 'stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: -50+bentoLeft, y: 250+bentoUp, z: 0 }, 
-            url: '' 
-        },
-        //  bottom
-        { 
-            videoSrc: 'marina.mp4', 
-            size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: -150+bentoLeft, y: 150+bentoUp, z: 0 }, 
-            url: 'https://github.com/F0rno/Marina-8bits-Computer'
-        },
-        { 
-            videoSrc: 'vago.mp4', 
-            size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: -50+bentoLeft, y: 150+bentoUp, z: 0 }, 
-            url: 'https://github.com/F0rno/Vago-summarizer'
-        },
-        // 1 alone
-        { 
-            videoSrc: 'linkedin.mp4', 
-            size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: 150+bentoLeft, y: 150+bentoUp, z: 0 }, 
-            url: 'https://www.linkedin.com/in/pablo-fornell/' 
-        },
-    ],
-    // Lower row
-    [
-        // Big 2 horizontal
-        { 
-            videoSrc: 'stay-tuned.mp4', 
-            size: { x: 200, y: 100, z: 100+bentoDepth }, 
-            position: { x: -500+bentoLeft, y: 50+bentoUp, z: 0 }, 
-            url: '' 
-        },
-        // 2 alone
-        { 
-            videoSrc: 'stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: -350+bentoLeft, y: 50+bentoUp, z: 0 }, 
-            url: '' 
-        },
-        { 
-            videoSrc: 'x.mp4', 
-            size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: -250+bentoLeft, y: 50+bentoUp, z: 0 }, 
-            url: 'https://twitter.com/F_de_Fornell' 
-        },
-        // Big 2 horizontal
-        { 
-            videoSrc: 'stay-tuned.mp4', 
-            size: { x: 200, y: 100, z: 100+bentoDepth }, 
-            position: { x: -100+bentoLeft, y: 50+bentoUp, z: 0 }, 
-            url: '' 
-        },
-        // Big 3 vertical
-        {
-            videoSrc: 'stay-tuned.mp4',
-            size: { x: 100, y: 300, z: 100+bentoDepth },
-            position: { x: 50+bentoLeft, y: 150+bentoUp, z: 0 },
-            url: ''
-        },
-        // 2 alone
-        { 
-            videoSrc: 'stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: 150+bentoLeft, y: 50+bentoUp, z: 0 }, 
-            url: '' 
-        },
-        { 
-            videoSrc: 'stay-tuned.mp4', 
-            size: { x: 100, y: 100, z: 100+bentoDepth }, 
-            position: { x: 250+bentoLeft, y: 50+bentoUp, z: 0 }, 
-            url: '' 
-        },
-    ],
-];
+// Bento board
 bentoBoard.createBentoGrid(boxes);
 
 
@@ -244,13 +126,16 @@ bentoBoard.createBentoGrid(boxes);
 // Director
 ////////////////////////////
 
+function initialScript() {
+    noiseSphere.animateSphereSizeIncreaseWithDelay()
+}
+
 let clickCount = 0;
 let lastClickTime = 0;
 const debounceTime = 1000;
 let targetRotation = camera.rotation.x;
 let targetPositionX = camera.position.x;
 const speedFactorXtranslation = 0.01;
-// Create a raycaster and a mouse vector
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
@@ -284,13 +169,9 @@ function captureMouseMovement() {
     });
 }
 
-function initialScript() {
-    animateSphereSizeIncreaseWithDelay()
-}
-
-async function mainScript() {
+async function introAnimationScript() {
     // Sphere expansion
-    animateSphereSizeIncreaseWithDelay(8)
+    noiseSphere.animateSphereSizeIncreaseWithDelay(8)
     await utils.sleep(750)
     // Scene transition to black
     utils.changeColor(scene.background, new THREE.Color(0x000000), 0.05);
@@ -304,11 +185,11 @@ async function mainScript() {
     bentoBoard.getBoxes().forEach(box => scene.add(box));
     // Grid
     displayGrid();
-    animate = mainAnimation;
+    animate = mainAnimationLoop;
     // Sphere
     noiseSphere.switchToShaderMaterial();
     noiseSphere.setPosition(0, 1750, -100);
-    animateSphereSizeDecrease(64);
+    noiseSphere.animateSphereSizeDecrease(64);
     noiseSphere.setPointsSpeed(0.0001);
     noiseSphere.setRotationSpeed(0.001);
     // Text
@@ -362,10 +243,14 @@ window.addEventListener('click', async () => {
     if (clickCount < 2) {
         initialScript()
     } else if (clickCount === 2) {
-        mainScript()
+        introAnimationScript()
         setMouseRayCaster()
     }
 });
+
+// Resize handler
+window.addEventListener('resize', () => utils.onWindowResize(renderer, camera), false);
+
 /*
 initialScript()
 mainScript()

@@ -92,6 +92,8 @@ class Grid {
         positionAttribute.array = new Float32Array(this.positions);
         positionAttribute.needsUpdate = true;
     }
+
+    
 }
 
 export default Grid;
