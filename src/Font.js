@@ -2,7 +2,7 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import * as THREE from 'three';
 
-export default class FontTextMeshLoader {
+class FontTextMeshLoader {
     constructor(name, fontData) {
         this.fontLoader = new FontLoader();
         this.textMesh = null;
@@ -45,3 +45,5 @@ export default class FontTextMeshLoader {
         return this.textMesh;
     }
 }
+
+export default FontTextMeshLoader;

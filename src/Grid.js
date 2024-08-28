@@ -72,11 +72,10 @@ class Grid {
     animateGridPerlinNoise() {
         this.directionFlag = this.directionFlag || 1;
 
-        // The time should go backwards instead of stop and reset
         if (this.time > 100) {
-            this.directionFlag = -1; // change direction to backwards
+            this.directionFlag = -1; // change direction backwards
         } else if (this.time < 0) {
-            this.directionFlag = 1; // change direction to forwards
+            this.directionFlag = 1; // change direction forwards
         }
 
         this.time += this.speed * this.directionFlag; // increment or decrement time by speed

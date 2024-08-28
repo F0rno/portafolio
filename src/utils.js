@@ -32,7 +32,6 @@ export function onWindowResize(renderer, camera) {
     camera.updateProjectionMatrix();
 }
 
-// Make a function to recive a hex color by reference and change it gradually
 export function changeColor(color, newColor, speed=0.1) {
     for (let i = 0; i < 500; i++) {
         setTimeout(() => {

@@ -1,4 +1,4 @@
-export default class AudioAnalyzer {
+class AudioAnalyzer {
     constructor(audioFilePath) {
         this.audioContext = new AudioContext();
         this.analyser = null;
@@ -15,7 +15,6 @@ export default class AudioAnalyzer {
                 source.connect(this.audioContext.destination);
                 source.start();
 
-                // Create an AnalyserNode
                 this.analyser = this.audioContext.createAnalyser();
                 source.connect(this.analyser);
             });
@@ -30,3 +29,5 @@ export default class AudioAnalyzer {
         return null;
     }
 }
+
+export default AudioAnalyzer;

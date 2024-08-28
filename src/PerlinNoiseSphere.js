@@ -2,6 +2,11 @@ import * as THREE from 'three';
 import * as shaders from './webGL_shaders';
 import { sphere } from './options';
 
+//////////////////////////////////////////////////
+// From https://codepen.io/vcomics/pen/djqNrm
+// Victor Vergara
+//////////////////////////////////////////////////
+
 class PerlinNoiseSphere {
   constructor() {
     this.mesh = new THREE.Object3D();

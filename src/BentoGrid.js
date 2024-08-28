@@ -6,7 +6,7 @@ class BentoGrid {
     }
 
     createBox(videoSrc, size, position, url) {
-        // Create a video element
+        // Video element
         const video = document.createElement('video');
         video.src = videoSrc;
         video.muted = true;
