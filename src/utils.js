@@ -54,3 +54,68 @@ export function increaseFov(camera, target=45, speed=0.1) {
     }
 }
 
+export function captureMouseMovement(mouseInfo, audioAnalyzer) {
+    const minX = -512;
+    const maxX = 512;
+
+    window.addEventListener('mousemove', (event) => {
+        const mousePercentageX = event.clientX / window.innerWidth;
+        mouseInfo.targetPositionX = minX + (maxX - minX) * mousePercentageX;
+    });
+
+    let isAudioPlaying = false;
+
+    window.addEventListener('wheel', (event) => {
+        const scrollDirection = event.deltaY > 0 ? -1 : 1;
+        const maxDegreesLookUp = 55;
+        const minDegreesLookDown = 0;
+        const scrollSpeedFactor = 0.05;
+
+        const maxRotation = maxDegreesLookUp * Math.PI / 180;
+        const minRotation = minDegreesLookDown * Math.PI / 180;
+
+        mouseInfo.targetRotationX = Math.min(Math.max(mouseInfo.targetRotationX - scrollDirection * scrollSpeedFactor, minRotation), maxRotation);
+
+        // If user is looking up, load audio
+        if (mouseInfo.targetRotationX === maxRotation && !isAudioPlaying) {
+            isAudioPlaying = true;
+            audioAnalyzer.loadAudio();
+        }
+    });
+}
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+export function setMouseRayCaster(bentoBoard) {
+    ////////////////////////////
+    // Raycaster
+    ////////////////////////////
+    window.removeEventListener('click', () => { });
+    window.addEventListener('click', (event) => {
+        // Normalize mouse position and set to mouse vector
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+        // Update the picking ray with the camera and mouse position
+        raycaster.setFromCamera(mouse, camera);
+
+        // Calculate objects intersecting the picking ray
+        const intersects = raycaster.intersectObjects(scene.children);
+
+        // If the box is among the intersected objects, open a link
+        for (let i = 0; i < intersects.length; i++) {
+            // If click a box of the bento grid
+            const boxes = bentoBoard.getBoxes();
+            for (let j = 0; j < boxes.length; j++) {
+                if (intersects[i].object === boxes[j]) {
+                    if (boxes[j].userData.url === '') {
+                        return;
+                    }
+                    window.open(boxes[j].userData.url, '_blank');
+                    return;
+                }
+            }
+        }
+    }, false);
+}

@@ -27,7 +27,6 @@ const audioAnalyzer = new AudioAnalyzer('Stellar-Odyssey.mp3');
 const bentoBoard = new BentoGrid();
 let grid;
 
-
 // Sphere setup
 const sphereMusicMultiplier = 175;
 let normalizedSphereSize = parseInt(12 * screenWidth / 512);
@@ -59,8 +58,8 @@ function initialAnimationScript() {
 function mainAnimationLoop() {
     requestAnimationFrame(animate);
     
-    camera.rotation.x += (targetRotation - camera.rotation.x) * 0.05;
-    camera.position.x += (targetPositionX - camera.position.x) * speedFactorXtranslation;
+    camera.rotation.x += (mouseInfo.targetRotationX - camera.rotation.x) * 0.05;
+    camera.position.x += (mouseInfo.targetPositionX - camera.position.x) * speedFactorXtranslation;
     
     grid.animateGridPerlinNoise();
     noiseSphere.animate();
@@ -126,48 +125,16 @@ bentoBoard.createBentoGrid(boxes);
 // Director
 ////////////////////////////
 
-function initialScript() {
+function initialScriptAnimation() {
     noiseSphere.animateSphereSizeIncreaseWithDelay()
 }
 
-let clickCount = 0;
-let lastClickTime = 0;
-const debounceTime = 1000;
-let targetRotation = camera.rotation.x;
-let targetPositionX = camera.position.x;
-const speedFactorXtranslation = 0.01;
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-
-function captureMouseMovement() {
-    const minX = -512;
-    const maxX = 512;
-
-    window.addEventListener('mousemove', (event) => {
-        const mousePercentageX = event.clientX / window.innerWidth;
-        targetPositionX = minX + (maxX - minX) * mousePercentageX;
-    });
-
-    let isAudioPlaying = false;
-
-    window.addEventListener('wheel', (event) => {
-        const scrollDirection = event.deltaY > 0 ? -1 : 1;
-        const maxDegreesLookUp = 55;
-        const minDegreesLookDown = 0;
-        const scrollSpeedFactor = 0.05;
-
-        const maxRotation = maxDegreesLookUp * Math.PI / 180;
-        const minRotation = minDegreesLookDown * Math.PI / 180;
-
-        targetRotation = Math.min(Math.max(targetRotation - scrollDirection * scrollSpeedFactor, minRotation), maxRotation);
-
-        // If user is looking up, load audio
-        if (targetRotation === maxRotation && !isAudioPlaying) {
-            isAudioPlaying = true;
-            audioAnalyzer.loadAudio();
-        }
-    });
+const cooldown = 1000;
+const mouseInfo = {
+    targetRotationX: camera.rotation.x,
+    targetPositionX: camera.position.x
 }
+const speedFactorXtranslation = 0.01;
 
 async function introAnimationScript() {
     // Sphere expansion
@@ -196,55 +163,25 @@ async function introAnimationScript() {
     scene.add(textMesh);
     // Enable camera with effect
     utils.increaseFov(camera, 4.5, 128);
-    captureMouseMovement();
+    utils.captureMouseMovement(mouseInfo, audioAnalyzer);
     await utils.sleep(500)
 }
 
-function setMouseRayCaster() {
-    ////////////////////////////
-    // Raycaster
-    ////////////////////////////
-    window.removeEventListener('click', () => { });
-    window.addEventListener('click', (event) => {
-        // Normalize mouse position and set to mouse vector
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-        // Update the picking ray with the camera and mouse position
-        raycaster.setFromCamera(mouse, camera);
-
-        // Calculate objects intersecting the picking ray
-        const intersects = raycaster.intersectObjects(scene.children);
-
-        // If the box is among the intersected objects, open a link
-        for (let i = 0; i < intersects.length; i++) {
-            // If click a box of the bento grid
-            const boxes = bentoBoard.getBoxes();
-            for (let j = 0; j < boxes.length; j++) {
-                if (intersects[i].object === boxes[j]) {
-                    if (boxes[j].userData.url === '') {
-                        return;
-                    }
-                    window.open(boxes[j].userData.url, '_blank');
-                    return;
-                }
-            }
-        }
-    }, false);
-}
+let clickCounter = 0;
+let lastClickTimer = 0;
 
 window.addEventListener('click', async () => {
     let currentTime = new Date().getTime();
-    if (currentTime - lastClickTime < debounceTime) {
+    if (currentTime - lastClickTimer < cooldown) {
         return;
     }
-    lastClickTime = currentTime;
-    clickCount++;
-    if (clickCount < 2) {
-        initialScript()
-    } else if (clickCount === 2) {
+    lastClickTimer = currentTime;
+    clickCounter++;
+    if (clickCounter < 2) {
+        initialScriptAnimation()
+    } else if (clickCounter === 2) {
         introAnimationScript()
-        setMouseRayCaster()
+        utils.setMouseRayCaster(bentoBoard)
     }
 });
 
@@ -252,6 +189,7 @@ window.addEventListener('click', async () => {
 window.addEventListener('resize', () => utils.onWindowResize(renderer, camera), false);
 
 /*
+DEBUG
 initialScript()
 mainScript()
 setMouseRayCaster()
