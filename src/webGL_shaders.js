@@ -221,7 +221,7 @@ export const vertexShader = `
     //gl_ClipDistance[0];
 
     }
-`;
+`
 
 export const fragmentShader = `
   varying float qnoise;
@@ -244,4 +244,4 @@ export const fragmentShader = `
     }
     gl_FragColor = vec4(r, g, b, 1.0);
   }
-`;
+`
