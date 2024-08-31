@@ -109,8 +109,8 @@ class PerlinNoiseSphere {
     this.mesh.visible = false
   }
 
-  animateSphereSizeIncreaseWithDelay (speed = 10) {
-    for (let i = 0; i < 100; i++) {
+  animateSphereSizeIncreaseWithDelay (speed = 10, size = 100) {
+    for (let i = 0; i < size; i++) {
       setTimeout(() => {
         this.increaseSize(1.01)
       }, i * speed)

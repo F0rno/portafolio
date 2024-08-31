@@ -127,7 +127,7 @@ async function introAnimationScript () {
   scene.add(textMesh)
   // Enable camera with effect
   utils.increaseFov(camera, 4.5, 128)
-  utils.captureMouseMovement(mouseInfo, audioAnalyzer)
+  utils.captureMouseMovement(mouseInfo, audioAnalyzer, audio.playSphereAudio)
   await utils.sleep(500)
 }
 
@@ -142,10 +142,9 @@ window.addEventListener('click', async () => {
   lastClickTimer = currentTime
   clickCounter++
   if (clickCounter < 2) {
-    audio.introLoopAudio()
+    audio.playMainAudio()
     initialScriptAnimation()
   } else if (clickCounter === 2) {
-    // audio.homeAudio()
     introAnimationScript()
     utils.setMouseRayCaster(bentoBoard, camera, scene)
   }

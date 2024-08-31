@@ -41,13 +41,19 @@ const transitionToTrack = async (newBuffer, transitionTime = 1) => {
 }
 
 let introAudioLoop
+let sphereAudio
 
 const initAudio = async () => {
   introAudioLoop = await loadAudioFile('DSESE-intro.mp3')
+  sphereAudio = await loadAudioFile('Stellar-Odyssey.mp3')
 }
 
 initAudio()
 
-export const introLoopAudio = async () => {
+export const playMainAudio = async () => {
   playAudio(introAudioLoop)
+}
+
+export const playSphereAudio = async () => {
+  transitionToTrack(sphereAudio)
 }

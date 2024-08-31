@@ -53,7 +53,7 @@ export function increaseFov (camera, target = 45, speed = 0.1) {
   }
 }
 
-export function captureMouseMovement (mouseInfo, audioAnalyzer) {
+export function captureMouseMovement (mouseInfo, audioAnalyzer, playSphereAudio) {
   const minX = -512
   const maxX = 512
 
@@ -78,7 +78,8 @@ export function captureMouseMovement (mouseInfo, audioAnalyzer) {
     // If user is looking up, load audio
     if (mouseInfo.targetRotationX === maxRotation && !isAudioPlaying) {
       isAudioPlaying = true
-      audioAnalyzer.loadAudio()
+      // audioAnalyzer.loadAudio()
+      playSphereAudio()
     }
   })
 }
