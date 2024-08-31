@@ -18,7 +18,7 @@ import * as audio from './src/audio.js'
 /// /////////////////////////
 // Scene
 /// /////////////////////////
-const { scene, renderer, camera } = utils.setupScene(3000, 85)
+const { scene, renderer, camera } = utils.setupScene(3750, 85)
 
 const screenWidth = window.innerWidth
 const fontData = JSON.parse(document.getElementById('fontData').textContent)
@@ -118,7 +118,7 @@ async function introAnimationScript () {
   noiseSphere.setPosition(0, 1750, -100)
   noiseSphere.animateSphereSizeDecrease(64)
   noiseSphere.setPointsSpeed(0.00006617265106389076)
-  noiseSphere.setRotationSpeed(0.001)
+  noiseSphere.setRotationSpeed(0)
   // Text
   textMeshLoader.loadFont()
   const textMesh = textMeshLoader.getTextMesh()
