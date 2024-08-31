@@ -7,6 +7,7 @@ import * as utils from './src/utils.js'
 import Grid from './src/Grid.js'
 import * as THREE from 'three'
 import FontTextMeshLoader from './src/Font.js'
+import * as audio from './src/audio.js'
 
 /// /////////////////////////
 // Deploy tutorial
@@ -141,8 +142,10 @@ window.addEventListener('click', async () => {
   lastClickTimer = currentTime
   clickCounter++
   if (clickCounter < 2) {
+    audio.introLoopAudio()
     initialScriptAnimation()
   } else if (clickCounter === 2) {
+    // audio.homeAudio()
     introAnimationScript()
     utils.setMouseRayCaster(bentoBoard, camera, scene)
   }
