@@ -117,7 +117,7 @@ async function introAnimationScript () {
   noiseSphere.switchToShaderMaterial()
   noiseSphere.setPosition(0, 1750, -100)
   noiseSphere.animateSphereSizeDecrease(64)
-  noiseSphere.setPointsSpeed(0.0001)
+  noiseSphere.setPointsSpeed(0.00006617265106389076)
   noiseSphere.setRotationSpeed(0.001)
   // Text
   textMeshLoader.loadFont()

@@ -36,7 +36,6 @@ const playAudio = (buffer, title, fadeInTime = 1) => {
   currentTitle = title
 }
 
-// Transition Between Musics
 const transitionToTrack = async (newBuffer, title, transitionTime = 1) => {
   if (currentGainNode) {
     currentGainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + transitionTime) // Fade out
