@@ -1,3 +1,4 @@
+/* eslint-disable no-loss-of-precision */
 import * as THREE from 'three'
 import * as shaders from './webGL_shaders'
 import { sphere } from './options'
@@ -33,13 +34,13 @@ class PerlinNoiseSphere {
     this.options = {
       perlin: {
         vel: 0.002, // Rotation speed 0.002
-        speed: 0.0001488884648937542, // Points speed 0.0001488884648937542
-        perlins: 1.0, // Size in the control panel
+        speed: 0.000017571937943287817, // Points speed 0.0001488884648937542
+        perlins: 2, // Size in the control panel
         decay: 1,
         complex: 0.30,
-        waves: 20.0,
-        eqcolor: 11.0,
-        fragment: true,
+        waves: 6.0,
+        eqcolor: 15.0, // HUE in the control panel
+        fragment: false,
         redhell: true
       },
       spin: {

@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 import PerlinNoiseSphere from './src/PerlinNoiseSphere.js'
-import AudioAnalyzer from './src/AudioAnalizer.js'
 import BentoGrid from './src/BentoGrid.js'
 import { boxes } from './src/options.js'
 import * as utils from './src/utils.js'
@@ -25,7 +24,6 @@ const screenWidth = window.innerWidth
 const fontData = JSON.parse(document.getElementById('fontData').textContent)
 
 const noiseSphere = new PerlinNoiseSphere()
-const audioAnalyzer = new AudioAnalyzer('Stellar-Odyssey.mp3')
 const bentoBoard = new BentoGrid()
 const textMeshLoader = new FontTextMeshLoader('Pablo Fornell', fontData)
 let grid
@@ -69,8 +67,8 @@ function mainAnimationLoop () {
   noiseSphere.animate()
 
   // Sphere move with music!!!
-  const data = audioAnalyzer.getFrequencyData()
-  if (data) {
+  const { title, data } = audio.getFrequencyData()
+  if (data && title === 'Stellar-Odyssey') {
     let scale = THREE.MathUtils.mapLinear(data[0], 0, 255, 0.5, 2)
     scale *= sphereMusicMultiplier
     noiseSphere.getMesh().scale.set(scale, scale, scale)
@@ -127,7 +125,7 @@ async function introAnimationScript () {
   scene.add(textMesh)
   // Enable camera with effect
   utils.increaseFov(camera, 4.5, 128)
-  utils.captureMouseMovement(mouseInfo, audioAnalyzer, audio.playSphereAudio)
+  utils.captureMouseMovement(mouseInfo, audio.playSphereAudio)
   await utils.sleep(500)
 }
 

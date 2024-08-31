@@ -1,24 +1,7 @@
 /* eslint-disable no-undef */
 class AudioAnalyzer {
-  constructor (audioFilePath) {
-    this.audioContext = new AudioContext()
-    this.analyser = null
-    this.audioFilePath = audioFilePath
-  }
-
-  loadAudio (audioFilePath = this.audioFilePath) {
-    fetch(audioFilePath)
-      .then(response => response.arrayBuffer())
-      .then(arrayBuffer => this.audioContext.decodeAudioData(arrayBuffer))
-      .then(audioBuffer => {
-        const source = this.audioContext.createBufferSource()
-        source.buffer = audioBuffer
-        source.connect(this.audioContext.destination)
-        source.start()
-
-        this.analyser = this.audioContext.createAnalyser()
-        source.connect(this.analyser)
-      })
+  constructor (analyser) {
+    this.analyser = analyser
   }
 
   getFrequencyData () {
@@ -26,6 +9,28 @@ class AudioAnalyzer {
       const data = new Uint8Array(this.analyser.frequencyBinCount)
       this.analyser.getByteFrequencyData(data)
       return data
+    }
+    return null
+  }
+
+  getTimeDomainData () {
+    if (this.analyser) {
+      const data = new Uint8Array(this.analyser.fftSize)
+      this.analyser.getByteTimeDomainData(data)
+      return data
+    }
+    return null
+  }
+
+  getRMSLevel () {
+    const timeDomainData = this.getTimeDomainData()
+    if (timeDomainData) {
+      let sumSquares = 0
+      for (let i = 0; i < timeDomainData.length; i++) {
+        const value = (timeDomainData[i] - 128) / 128
+        sumSquares += value * value
+      }
+      return Math.sqrt(sumSquares / timeDomainData.length)
     }
     return null
   }

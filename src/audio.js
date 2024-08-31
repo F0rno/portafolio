@@ -1,6 +1,11 @@
+import AudioAnalyzer from './AudioAnalizer'
+
 const audioContext = new (window.AudioContext || window.webkitAudioContext)()
+const analyserNode = audioContext.createAnalyser()
+const audioAnalyzer = new AudioAnalyzer(analyserNode)
 let currentSource = null
 let currentGainNode = null
+let currentTitle = null
 
 const loadAudioFile = async (url) => {
   const response = await fetch(url)
@@ -8,7 +13,7 @@ const loadAudioFile = async (url) => {
   return await audioContext.decodeAudioData(arrayBuffer)
 }
 
-const playAudio = (buffer, fadeInTime = 1) => {
+const playAudio = (buffer, title, fadeInTime = 1) => {
   if (currentSource) {
     currentSource.stop()
   }
@@ -18,7 +23,8 @@ const playAudio = (buffer, fadeInTime = 1) => {
 
   const gainNode = audioContext.createGain()
   source.connect(gainNode)
-  gainNode.connect(audioContext.destination)
+  gainNode.connect(analyserNode)
+  analyserNode.connect(audioContext.destination)
 
   gainNode.gain.setValueAtTime(0, audioContext.currentTime)
   gainNode.gain.linearRampToValueAtTime(1, audioContext.currentTime + fadeInTime) // Fade in
@@ -27,16 +33,17 @@ const playAudio = (buffer, fadeInTime = 1) => {
 
   currentSource = source
   currentGainNode = gainNode
+  currentTitle = title
 }
 
 // Transition Between Musics
-const transitionToTrack = async (newBuffer, transitionTime = 1) => {
+const transitionToTrack = async (newBuffer, title, transitionTime = 1) => {
   if (currentGainNode) {
     currentGainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + transitionTime) // Fade out
   }
   // Start playing the new track with a fade-in effect before the current track completely fades out
   setTimeout(() => {
-    playAudio(newBuffer, transitionTime)
+    playAudio(newBuffer, title, transitionTime)
   }, transitionTime * 500)
 }
 
@@ -51,9 +58,30 @@ const initAudio = async () => {
 initAudio()
 
 export const playMainAudio = async () => {
-  playAudio(introAudioLoop)
+  playAudio(introAudioLoop, 'DSESE-intro')
 }
 
 export const playSphereAudio = async () => {
-  transitionToTrack(sphereAudio)
+  transitionToTrack(sphereAudio, 'Stellar-Odyssey')
+}
+
+export const getFrequencyData = () => {
+  return {
+    title: currentTitle,
+    data: audioAnalyzer.getFrequencyData()
+  }
+}
+
+export const getTimeDomainData = () => {
+  return {
+    title: currentTitle,
+    data: audioAnalyzer.getTimeDomainData()
+  }
+}
+
+export const getRMSLevel = () => {
+  return {
+    title: currentTitle,
+    data: audioAnalyzer.getRMSLevel()
+  }
 }
