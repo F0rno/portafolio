@@ -35,7 +35,7 @@ class PerlinNoiseSphere {
       perlin: {
         vel: 0.002, // Rotation speed 0.002
         speed: 0.0001488884648937542, // Points speed 0.0001488884648937542
-        perlins: 1.5, // Size in the control panel
+        perlins: 1.75, // Size in the control panel
         decay: 1,
         complex: 0.30,
         waves: 6.0,
