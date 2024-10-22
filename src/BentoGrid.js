@@ -3,18 +3,29 @@ import * as THREE from 'three'
 class BentoGrid {
   constructor () {
     this.boxes = []
+    this.videoTextureCache = {} // Cache for video textures
   }
 
   createBox (videoSrc, size, position, url) {
-    // Video element
-    const video = document.createElement('video')
-    video.src = videoSrc
-    video.muted = true
-    video.load()
-    video.play()
-    video.loop = true
+    let videoTexture
 
-    const videoTexture = new THREE.VideoTexture(video)
+    // Check if the video texture is already cached
+    if (this.videoTextureCache[videoSrc]) {
+      videoTexture = this.videoTextureCache[videoSrc]
+    } else {
+      // Video element
+      const video = document.createElement('video')
+      video.src = videoSrc
+      video.muted = true
+      video.load()
+      video.play()
+      video.loop = true
+
+      videoTexture = new THREE.VideoTexture(video)
+
+      // Store the texture in the cache
+      this.videoTextureCache[videoSrc] = videoTexture
+    }
 
     // Create a box with the video texture on one face and basic material on other faces
     const boxGeometry = new THREE.BoxGeometry(size.x, size.y, size.z)
@@ -39,10 +50,10 @@ class BentoGrid {
     return box
   }
 
-  createBentoGrid (grid) {
-    for (let i = 0; i < grid.length; i++) {
-      for (let j = 0; j < grid[i].length; j++) {
-        const box = this.createBox(grid[i][j].videoSrc, grid[i][j].size, grid[i][j].position, grid[i][j].url)
+  createBentoGrid (boxes) {
+    for (let i = 0; i < boxes.length; i++) {
+      for (let j = 0; j < boxes[i].length; j++) {
+        const box = this.createBox(boxes[i][j].videoSrc, boxes[i][j].size, boxes[i][j].position, boxes[i][j].url)
         this.boxes.push(box)
       }
     }
