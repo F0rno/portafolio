@@ -54,14 +54,7 @@ const initAudio = async () => {
   sphereAudio = await loadAudioFile('Stellar-Odyssey.mp3')
 
   if (audioContext.state === 'suspended') {
-    audioContext.onstatechange = () => {
-      if (audioContext.state === 'running') {
-        playMainAudio()
-        audioContext.onstatechange = null
-      }
-    }
-  } else {
-    playMainAudio()
+    audioContext.resume()
   }
 }
 
